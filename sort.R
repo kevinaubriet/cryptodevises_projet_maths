@@ -1,6 +1,7 @@
 ##import librairies
 library(readr)
 library(stringr)
+library(lubridate)
 
 
 bitcoin_price <- read_csv("data/all/bitcoin_price.csv")
@@ -29,6 +30,12 @@ for (i in 1:nrow(bitcoin_price)) {
   bitcoin_price$Day[i] <- as.numeric(getDay(bitcoin_price$Date[i]))
   bitcoin_price$Month[i] <- match(getMonth(bitcoin_price$Date[i]), month.abb)
   bitcoin_price$Year[i] <- as.numeric(getYear(bitcoin_price$Date[i]))
+  
+  ##Creation d'une nouvelle colonne Date
+  ##Du type date plus exploitable
+  date <- paste(bitcoin_price$Year[i], bitcoin_price$Month[i], sep = "-", collapse=NULL)
+  date <- paste(date, bitcoin_price$Day[i], sep = "-", collapse=NULL)
+  bitcoin_price$DateFormat[i] <- format(as.Date(date))
 }
 
 ##on ne conserve que les données datant au minimum de 2015
