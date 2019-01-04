@@ -40,4 +40,4 @@ for (i in 1:nrow(bitcoin_price)) {
 
 ##on ne conserve que les données datant au minimum de 2015
 bitcoin_price_sorted <- bitcoin_price[bitcoin_price$Year >= 2015,]
-View(bitcoin_price_sorted)
+##View(bitcoin_price_sorted)
