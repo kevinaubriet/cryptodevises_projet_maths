@@ -1,32 +1,12 @@
-# Create the data for the chart.
-v <- c(7,12,28,3,41)
-t <- c(14,7,6,19,3)
+library(forcats)
 
-# Give the chart file a name.
-png(file = "graphic_test.jpg")
+bitcoin_price_sorted_2016 <- bitcoin_price_sorted[bitcoin_price_sorted$Year == 2016,]
+bitcoin_price_sorted_2016 <- bitcoin_price_sorted_2016[order(bitcoin_price_sorted_2016$Day),]
+bitcoin_price_sorted_2016 <- bitcoin_price_sorted_2016[order(bitcoin_price_sorted_2016$Month),]
 
-# Plot the bar chart.
-plot(v,type = "o",col = "red", xlab = "Month", ylab = "Rain fall", 
-     main = "Rain fall chart")
-
-lines(t, type = "o", col = "blue")
-
-# Save the file.
-dev.off()
-
-##import librairies
-library(readr)
-library(stringr)
-
-
-
-getAnnee <- function(str) {
-  res <- str_split(str, ", ")[[1]][[length(str_split(str, ", ")[[1]])]]
-  return(res)
-}
-
-
-bitcoin_price <- read_csv("data/all/bitcoin_price.csv")
-##bitcoin_price_sorted <- bitcoin_price[sapply(strsplit(bitcoin_price$Date, ","), tail, 1) >= "2015",]
-bitcoin_price_sorted <- bitcoin_price[bitcoin_price$Date > "2015",]
-getAnnee(bitcoin_price$Date)
+##courbe de l'évolution du cours du bitcoin en 2016
+graph <- ggplot(bitcoin_price_sorted_2016, aes(x=fct_inorder(Date), y=Low, colour="blue", shape="square", group=1))
+graph <- graph + scale_x_continuous("Months", limits=c(0,30))
+graph <- graph + geom_line(size=1)
+print(graph)
+View(bitcoin_price_sorted_2016)

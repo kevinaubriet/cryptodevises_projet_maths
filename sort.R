@@ -34,12 +34,3 @@ for (i in 1:nrow(bitcoin_price)) {
 ##on ne conserve que les données datant au minimum de 2015
 bitcoin_price_sorted <- bitcoin_price[bitcoin_price$Year >= 2015,]
 View(bitcoin_price_sorted)
-
-
-library(ggplot2)
-
-p1 <- ggplot() + 
-  geom_line(aes(y = Open, x = Date), data = bitcoin_price_2016) +
-  theme(text=element_text(family="Tahoma"))
-
-p1 + labs(title = "Venezuela's collapsing car sales", x = "Year", y = "Thousands of units", caption = "Data: Cavenez.com")
