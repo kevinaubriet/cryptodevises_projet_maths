@@ -1,6 +1,30 @@
 ##import librairies
 library(readr)
-
+library(stringr)
 bitcoin_price <- read_csv("data/all/bitcoin_price.csv")
-bitcoin_price_sorted <- bitcoin_price[bitcoin_price$Date >= "Jan 01, 2015",]
+
+getYear <- function(str) {
+  res <- str_split(str, ", ")[[1]][[length(str_split(str, ", ")[[1]])]]
+  return(res)
+}
+
+getMonth <- function(str) {
+  res <- str_split(str, ", ")[[0]][[1]]
+  return(res)
+}
+
+for (i in 1:nrow(bitcoin_price)) {
+  bitcoin_price$Year[i] <- as.numeric(getYear(bitcoin_price$Date[i]))
+  bitcoin_price$Month[i] <- getMonth(bitcoin_price$Date[i])
+}
+bitcoin_price_sorted <- bitcoin_price[bitcoin_price$Year >= 2015,]
 View(bitcoin_price_sorted)
+
+
+library(ggplot2)
+
+p1 <- ggplot() + 
+  geom_line(aes(y = Open, x = Date), data = bitcoin_price_2016) +
+  theme(text=element_text(family="Tahoma"))
+
+p1 + labs(title = "Venezuela's collapsing car sales", x = "Year", y = "Thousands of units", caption = "Data: Cavenez.com")
