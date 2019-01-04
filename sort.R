@@ -3,6 +3,7 @@ library(readr)
 library(stringr)
 
 
+bitcoin_price <- read_csv("data/all/bitcoin_price.csv")
 
 getYear <- function(str) {
   res <- str_split(str, ", ")[[1]][[length(str_split(str, ", ")[[1]])]]
@@ -21,14 +22,11 @@ getDay <- function(str){
   return(res)
 }
 
-bitcoin_price <- read_csv("data/all/bitcoin_price.csv")
-
-test1 <- getMonth(bitcoin_price[1,1])
-
-View(test1)
 for (i in 1:nrow(bitcoin_price)) {
   bitcoin_price$Year[i] <- as.numeric(getYear(bitcoin_price$Date[i]))
   bitcoin_price$Month[i] <- getMonth(bitcoin_price$Date[i])
+  bitcoin_price$Day[i] <- as.numeric(getDay(bitcoin_price$Date[i]))
+  
 }
 bitcoin_price_sorted <- bitcoin_price[bitcoin_price$Year >= 2015,]
 View(bitcoin_price_sorted)
