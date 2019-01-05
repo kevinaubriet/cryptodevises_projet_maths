@@ -1,4 +1,5 @@
 ##import librairies
+
 library(readr)
 library(stringr)
 library(lubridate)
@@ -6,6 +7,8 @@ library(lubridate)
 
 bitcoin_price <- read_csv("data/all/bitcoin_price.csv")
 variationBtc <- read_csv("data/bitcoin_variation.csv")
+
+
 
 ##Extraction de l'année
 getYear <- function(str) {
@@ -25,6 +28,11 @@ getDay <- function(str){
   return(res)
 }
 
+getVariation <- function(str){
+  res <- str_replace(str, "%", "")
+  return(res)
+}
+
 ##Ajout des colonnes jour, mois et année
 ##pour faciliter le traitement des données
 for (i in 1:nrow(bitcoin_price)) {
@@ -41,4 +49,17 @@ for (i in 1:nrow(bitcoin_price)) {
 
 ##on ne conserve que les données datant au minimum de 2015
 bitcoin_price_sorted <- bitcoin_price[bitcoin_price$Year >= 2015,]
-View(variationBtc)
+
+##Creation d'une nouvelle colonne Date
+##Du type date plus exploitable
+for(j in 1:nrow(variationBtc)){
+  variationBtc$Year[j] <- as.numeric(year(variationBtc$Date[j]))
+  variationBtc$Variation[j] <- as.numeric(getVariation(variationBtc$`Variation 24h`[j]))
+}
+
+##on ne conserve que les données datant au minimum de 2015
+variationBtc_sorted <- variationBtc[variationBtc$Year >= 2015,]
+variationBtc_sorted<- variationBtc_sorted[,-2]
+variationBtc_sorted<- variationBtc_sorted[,-2]
+
+
