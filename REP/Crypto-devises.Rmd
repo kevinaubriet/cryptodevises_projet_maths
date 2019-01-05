@@ -26,6 +26,8 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## Résultats obtenus et visualisation graphique <a name="resultats"></a>
 
+
+
 ## Présentation du groupe et du rôle de chacun <a name="groupe"></a>
 
 

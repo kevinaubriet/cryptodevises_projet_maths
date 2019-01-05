@@ -4,8 +4,8 @@ library(scales)
 library(ggplot2)
 library(lubridate)
 
-#bitcoin_price_sorted <- bitcoin_price_sorted[order(month(bitcoin_price_sorted$Day)),]
-bitcoin_price_sorted <- bitcoin_price_sorted[order(month(bitcoin_price_sorted$Month)),]
+bitcoin_price_sorted <- bitcoin_price_sorted[order(bitcoin_price_sorted$Day),]
+bitcoin_price_sorted <- bitcoin_price_sorted[order(bitcoin_price_sorted$Month),]
 bitcoin_price_sorted$Year <- as.factor(bitcoin_price_sorted$Year)
 
 ##### FIN RECUP DATAS
