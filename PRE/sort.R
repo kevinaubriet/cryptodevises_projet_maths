@@ -43,9 +43,16 @@ getData2015 <-function(src){
     date <- paste(res$Year[i], res$Month[i], sep = "-", collapse=NULL)
     date <- paste(date, res$Day[i], sep = "-", collapse=NULL)
     res$DateFormat[i] <- format(as.Date(date))
+    
   }
   ##on ne conserve que les données datant au minimum de 2015
   resF<-res[res$Year>=2015,]
+  
+  ##tri dans l'ordre des années puis des mois
+  resF <- resF[order(month(resF$Day)),]
+  resF <- resF[order(month(resF$Month)),]
+  resF <- resF[order(month(resF$Year)),]
+  
   return(resF)
 }
 
