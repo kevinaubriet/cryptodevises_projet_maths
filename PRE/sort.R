@@ -64,3 +64,4 @@ variationBtc_sorted<- variationBtc_sorted[,-2]
 variationBtc_sorted<- variationBtc_sorted[,-2]
 
 
+
