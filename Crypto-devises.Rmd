@@ -1,0 +1,31 @@
+---
+title: "Crypto-devises"
+author: "Habiba BOUAJLA, Kevin AUBRIET & Gabriel CURINGA"
+date: "05/01/2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+
+# Table des matières
+- [Descriptif sujet et ses finalités](#descriptif)
+- [Données utilisées](#donnees)
+- [Méthodologie suivie pour répondre aux questions](#methodologie)
+- [Résultats obtenus et visualisation graphique](#resultats)
+- [Présentation du groupe et du rôle de chacun](#groupe)
+
+## Descriptif sujet et ses finalités <a name="descriptif"></a>
+
+## Données utilisées <a name="donnees"></a>
+
+## Méthodologie suivie pour répondre aux questions <a name="methodologie"></a>
+
+## Résultats obtenus et visualisation graphique <a name="resultats"></a>
+
+## Présentation du groupe et du rôle de chacun <a name="groupe"></a>
+
+
