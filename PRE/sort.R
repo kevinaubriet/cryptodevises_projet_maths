@@ -1,3 +1,4 @@
+source('./PRE/install.R')
 ##import librairies
 library(readr)
 library(stringr)
