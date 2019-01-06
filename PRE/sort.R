@@ -1,9 +1,9 @@
+source('./PRE/extract.R')
+
 ##import librairies
 library(readr)
 library(stringr)
 library(lubridate)
-
-variationBtc <- read_csv("data/bitcoin_variation.csv")
 
 ##Extraction de l'année
 getYear <- function(str) {
@@ -22,12 +22,13 @@ getDay <- function(str){
   res <- str_split(res, " ")[[1]][2]
   return(res)
 }
-
+##supprime le %
 getVariation <- function(str){
   res <- str_replace(str, "%", "")
   return(res)
 }
 
+##Recupère les données d'un fichier csv (dans all) et construit un dataframe en rajoutant des colonnes de date pour exploiter plus facilement les donées
 getData2015 <-function(src){
   res <- read.csv(src)
   ##Ajout des colonnes jour, mois et année
@@ -73,6 +74,8 @@ graphsC <- read.csv("data/all/final_csv_close.csv")
 #graphs de corrélation des market cap (bitcoin par rapport aux autres crypto)
 graphsM <- read.csv("data/all/final_csv_market_cap.csv")
 
+
+variationBtc <- read_csv("data/bitcoin_variation.csv")
 
 ##Creation d'une nouvelle colonne Date
 ##Du type date plus exploitable

@@ -1,7 +1,4 @@
-source('./PRE/sort.R')
-
 ##2016
-
 bitcoin_price_sorted_2016 <- bitcoin_price_sorted[bitcoin_price_sorted$Year == 2016,]
 
 ##moyenne de 2016

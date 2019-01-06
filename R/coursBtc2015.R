@@ -1,7 +1,4 @@
-source('./PRE/sort.R')
-
 ##2015
-View(bitcoin_price_sorted)
 bitcoin_price_sorted_2015 <- bitcoin_price_sorted[bitcoin_price_sorted$Year == 2015,]
 
 ##moyenne de 2015

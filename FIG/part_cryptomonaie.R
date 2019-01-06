@@ -1,5 +1,3 @@
-source('./PRE/sort.R')
-
 getLastMarketCap<-function(tab){
   tab$Year <- as.factor(tab$Year)
   col<-tab$Market.Cap

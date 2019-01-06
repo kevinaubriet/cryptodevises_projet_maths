@@ -1,4 +1,3 @@
-source('./PRE/sort.R')
 library(forcats)
 library(scales)
 library(ggplot2)
