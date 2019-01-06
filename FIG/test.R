@@ -15,7 +15,7 @@ bitcoin_price_sorted2017 <-bitcoin_price_sorted[bitcoin_price_sorted$Year == 201
 BDD <- data.frame(setNames(replicate(5,numeric(0), simplify = F),c("Val2015","Val2016","Jours","Mois","Date") ))
 
 
-resultats <- data.frame(Val2015= bitcoin_price_sorted2015$Close, Val2017=bitcoin_price_sorted2017$Close,Moi=bitcoin_price_sorted2015$Month ,Jour=bitcoin_price_sorted2015$DateFormat)
+resultats <- data.frame(Val2015= bitcoin_price_sorted2015$Close, Val2017=bitcoin_price_sorted2017$Close,Moi=bitcoin_price_sorted2015$Month, Jour=bitcoin_price_sorted2015$DateFormat)
 
 prediction2 <- gather(
   data = resultats,
