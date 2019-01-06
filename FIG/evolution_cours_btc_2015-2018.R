@@ -23,9 +23,7 @@ ggplot(bitcoin_price_sorted, aes(x=as.Date(DateFormat), y=Open, color=Year, grou
 bitcoin_price_sorted$Year <- as.factor(bitcoin_price_sorted$Year)
 
 bitcoin_price_sorted2016 <-bitcoin_price_sorted[bitcoin_price_sorted$Year == 2016,]
-
-bitcoin_price_sorted2016 <- bitcoin_price_sorted2016[-60,] # On supprime la 60eme ligne (qui equivaut au 29 juillet)
-
+bitcoin_price_sorted2016 <- bitcoin_price_sorted2016[-60,] # On supprime la 60eme ligne (qui equivaut au 29 février)
 
 bitcoin_price_sorted2015 <-bitcoin_price_sorted[bitcoin_price_sorted$Year == 2015,]
 bitcoin_price_sorted2017 <-bitcoin_price_sorted[bitcoin_price_sorted$Year == 2017,]
@@ -41,6 +39,8 @@ prediction2 <- gather(
 
 ggplot(
   prediction2,
-  aes(x = as.Date(Jour), y = VAL, color = TYPE),
-)+scale_x_date(name="Months", labels = date_format("%b"), breaks = "1 month")+
+  aes(x = as.Date(Jour), y = VAL, color = TYPE),)+
+  ggtitle("Évolution du cours du Bitcoin de 2015 à 2017")+
+  ylab("Values")+
+  scale_x_date(name="Months", labels = date_format("%b"), breaks = "1 month")+
   geom_line()

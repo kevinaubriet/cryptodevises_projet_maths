@@ -15,11 +15,15 @@ text-align: justify
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-```{r sort_import, message=FALSE, warning=FALSE, include=FALSE}
+```{r import, message=FALSE, warning=FALSE, include=FALSE}
 ##import librairies
 library(readr)
 library(stringr)
 library(lubridate)
+library(ggplot2)
+library(reshape2)
+library(tidyr)
+library(scales)
 ```
 
 # Table des matières
@@ -78,7 +82,7 @@ getDay <- function(str){
 }
 ```
 
-Cette fonction
+Souvent, nous avons dû traiter les données déjà présentes dans les fichiers CSV pour les formater de manières à ce qu'elles soient exploitables. Par exemple, ci-dessous nous avons dû créer une fonction qui retire le symbole "%".
 ```{r sort_get_variation, echo=TRUE, message=FALSE, warning=FALSE}
 getVariation <- function(str){
   res <- str_replace(str, "%", "")
@@ -86,7 +90,7 @@ getVariation <- function(str){
 }
 ```
 
-Récupération des données 
+Get data
 ```{r sort_, echo=TRUE, message=FALSE, warning=FALSE}
 getData2015 <-function(src){
   res <- read.csv(src)
@@ -116,7 +120,7 @@ getData2015 <-function(src){
 }
 ```
 
-```{r sort_recup_datas, echo=TRUE, message=FALSE, warning=FALSE}
+```{r sort_recup_datas, message=FALSE, warning=FALSE, include=FALSE}
 variationBtc <- read_csv("../data/bitcoin_variation.csv")
 bitcoin_price_sorted<-getData2015("../data/all/bitcoin_price.csv")
 
@@ -136,17 +140,49 @@ variationBtc_sorted<- variationBtc_sorted[,-2]
 
 # Résultats obtenus et visualisation graphique <a name="resultats"></a>
 
-```{r plot_variations_btc, echo=TRUE, message=FALSE, warning=FALSE}
-library(ggplot2)
-library(reshape2)
-library(tidyr)
-library(scales)
+### Évolution du cours du bitcoin de 2015 à 2017
 
+```{r evolution_cours_btc_formatDatas, message=FALSE, warning=FALSE, include=FALSE}
+bitcoin_price_sorted$Year <- as.factor(bitcoin_price_sorted$Year)
+
+bitcoin_price_sorted2016 <-bitcoin_price_sorted[bitcoin_price_sorted$Year == 2016,]
+bitcoin_price_sorted2016 <- bitcoin_price_sorted2016[-60,] # On supprime la 60eme ligne (qui equivaut au 29 février)
+
+bitcoin_price_sorted2015 <-bitcoin_price_sorted[bitcoin_price_sorted$Year == 2015,]
+bitcoin_price_sorted2017 <-bitcoin_price_sorted[bitcoin_price_sorted$Year == 2017,]
+
+resultats <- data.frame(Val2015= bitcoin_price_sorted2015$Close, Val2016=bitcoin_price_sorted2016$Close, Val2017=bitcoin_price_sorted2017$Close, Moi=bitcoin_price_sorted2015$Month ,Jour=bitcoin_price_sorted2015$DateFormat)
+```
+
+```{r plot_evolution_cours_btc, echo=TRUE, message=FALSE, warning=FALSE}
+
+prediction2 <- gather(
+  data = resultats,
+  key = TYPE,
+  value = VAL,
+  Val2015,Val2016, Val2017
+)
+
+ggplot(
+  prediction2,
+  aes(x = as.Date(Jour), y = VAL, color = TYPE),)+
+  ggtitle("Évolution du cours du Bitcoin de 2015 à 2017")+
+  ylab("Values")+
+  scale_x_date(name="Months", labels = date_format("%b"), breaks = "1 month")+
+  geom_line()
+```
+
+
+### Variations du cours du Bitcoin en 2016 et 2017
+```{r variations_btc, message=FALSE, warning=FALSE, include=FALSE}
 variationBtc_sorted_2016 <- variationBtc_sorted[variationBtc_sorted$Year == 2016,]
 variationBtc_sorted_2016 <- variationBtc_sorted_2016[-60,]
 
 variationBtc_sorted_2017 <- variationBtc_sorted[variationBtc_sorted$Year == 2017,]
+```
 
+
+```{r plot_variations_btc, echo=TRUE, message=FALSE, warning=FALSE}
 ## Création d'un nouveau data frame
 ## Plus exploitable
 df <- data.frame(Val2016 = variationBtc_sorted_2016$Variation, 
@@ -167,6 +203,8 @@ datas <- gather(
 ggplot(
   datas,
   aes(x = as.Date(Date), y = VAL, color = TYPE),)+
+  ggtitle("Variations du cours du Bitcoin en 2016 & 2017")+
+  ylab("Valeurs")+
   scale_x_date(name="Months", labels = date_format("%b"), breaks = "1 month")+
   geom_line()
 ```

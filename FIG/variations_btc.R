@@ -28,5 +28,7 @@ datas <- gather(
 ggplot(
   datas,
   aes(x = as.Date(Date), y = VAL, color = TYPE),)+
+  ggtitle("Variations du cours du Bitcoin en 2016 & 2017")+
+  ylab("Valeurs")+
   scale_x_date(name="Months", labels = date_format("%b"), breaks = "1 month")+
   geom_line()
