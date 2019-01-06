@@ -29,8 +29,3 @@ ggplot(
   aes(x = as.Date(Jour), y = VAL, color = TYPE),
 )+scale_x_date(name="Months", labels = date_format("%b"), breaks = "1 month")+
 geom_line()
-
-
-
-
-
