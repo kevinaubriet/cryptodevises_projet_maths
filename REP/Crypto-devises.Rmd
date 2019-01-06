@@ -32,6 +32,9 @@ library(corrplot)
 library(forcats)
 ```
 
+# Présentation du groupe et du rôle de chacun <a name="groupe"></a>
+Notre groupe est composé de 3 membres : Habiba Bouajla, Gabriel Curinga et Kevin Aubriet. Dans un premier temps, nous nous sommes pas répartis les tahes mais avons préférer travailler tous ensemble sur la sélection des données ainsi que le traitment des dataframes pour pourvoir se familiariser avec le language R et s'entraider. Une fois tout le monde à l'aise avec la gestion des données avec R, nous nous sommes répartis les taches comme ceci : Habiba s'est occupée du test de correlation du bitcoin avec les autres crypto-monnaies qui comprent un script de test de correlation ainsi que 3 matrices. Gabriel lui a généré des graphiques du cours du bitcoin (un avec une seule courbe et un autre avec plusieurs courbes pour chaque année), un graphique de variation du bicoin pour voir les différentes hausses ou baisses du bitcoin. Kevin avait comme tahce de réaliser les scripts de calcul du court de bitcoin comprenant le calcul des moyennes,variances et écart type de différentes données, de faire deux graphiques un camembert pour analyser le marketCap du bitcoin par rapport aux autres crypto-monnnaies et un graphique avec plusieurs courbes pour chaque crypto-monnaie.
+Le rapport et le support de présentation orale a été fait par tous les membres de l'équipe.
 # Descriptif sujet et ses finalités
 
 Depuis plusieurs années, le phénomène de la crypto-monnaie prend de plus en plus de place dans nos mondes bancaires et financiers. Il s’agit d’une monnaie virtuelle et cryptée, c’est-à-dire qu’elle n’est utilisable que par une personne possédant le code permettant de décrypter la monnaie.
