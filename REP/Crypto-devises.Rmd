@@ -43,6 +43,18 @@ L’objectif de notre projet est d’utiliser les données des cours des crypto-
 
 # Méthodologie suivie pour répondre aux questions
 
+Pour mener à bien notre projet et répondre le plus précisement possible aux objectifs, nous avons tout d'abord rechercher les données relatives aux crypto-monnaies les mieux adaptées. La qualité des données récoltées est primordiale dans un tel exercice où nous souhaitons effectuer des vérifications d'hypothèses et des tests de corrélations.
+C'est alors que le groupe a démarré un projet dans le langage R dans lequel nous avons mis en place un environnement de travail qui suit l'architecture suivante : 
+
+* PRE = scripts d'imports et de traitements des données
+* FIG = scripts de créations des graphiques
+* R = scripts de vérifications d'hypothèses et des tests de corrélations
+* REP = dossier contenant le rapport
+* data = dossier contenant les données exploitées dans ce projet
+
+Tout ce projet se trouve sur un [git]("https://github.com/kevinaubriet/cryptodevises_projet_maths.git") (hebergé sur GitHub) pour faciliter le travail en groupe évidemment.
+
+Une fois que l'environnement a été mis en place, nous avons effectué tous les traitements de données/tableaux pour en tirer uniquement les choses utiles.
 
 
 
@@ -250,6 +262,59 @@ ggplot(
   scale_x_date(name="Months", labels = date_format("%b"), breaks = "1 month")+
   geom_line()
 ```
+
+### Moyennes et variances
+```{r average_var_2017, echo=TRUE, message=FALSE, warning=FALSE}
+##2017
+bitcoin_price_sorted_2017 <- bitcoin_price_sorted[bitcoin_price_sorted$Year == 2017,]
+
+##moyenne de 2017
+moyBtcMin2017 <- mean(bitcoin_price_sorted_2017$Low)
+moyBtcMax2017 <- mean(bitcoin_price_sorted_2017$High)
+moyBtcVo2017l <-mean(bitcoin_price_sorted_2017$Volume)
+
+##variance de 2017
+varBtcMin2017 <- var(bitcoin_price_sorted_2017$Low)
+varBtcMax2017 <- var(bitcoin_price_sorted_2017$High)
+varBtcVol2017 <- var(bitcoin_price_sorted_2017$Volume)
+
+##ecrat type de 2017
+ecartBtcMin2017 <- sqrt(varBtcMin2017)
+ecartBtcMax2017 <- sqrt(varBtcMax2017)
+ecartBtcVol2017 <- sqrt(varBtcVol2017)
+
+tabMoyLow2017<-0
+tabMoyHigh2017<-0
+tabMoyVol2017<-0
+tabVarLow2017<-0
+tabVarHigh2017<-0
+tabVarVol2017<-0
+tabEcartLow2017<-0
+tabEcartHigh2017<-0
+tabEcartVol2017<-0
+
+##boucle permettant de remplir les tableaux de mois
+for(i in 1:12){
+  ##moyenne pour chaque mois
+  tabMoyLow2017[i]<- mean(bitcoin_price_sorted_2017[bitcoin_price_sorted_2017$Month == i,]$Low)
+  tabMoyHigh2017[i]<- mean(bitcoin_price_sorted_2017[bitcoin_price_sorted_2017$Month == i,]$High)
+  tabMoyVol2017[i]<- mean(bitcoin_price_sorted_2017[bitcoin_price_sorted_2017$Month == i,]$Volume)
+  
+  ##variance pour chaque mois
+  tabVarLow2017[i]<- var(bitcoin_price_sorted_2017[bitcoin_price_sorted_2017$Month == i,]$Low)
+  tabVarHigh2017[i]<- var(bitcoin_price_sorted_2017[bitcoin_price_sorted_2017$Month == i,]$High)
+  tabVarVol2017[i]<- var(bitcoin_price_sorted_2017[bitcoin_price_sorted_2017$Month == i,]$Volume)
+  
+  ##ecart type pour chaque mois
+  tabEcartLow2017[i] <- sqrt(tabVarLow2017[i])
+  tabEcartHigh2017[i] <- sqrt(tabVarHigh2017[i])
+  tabEcartVol2017[i] <- sqrt(tabVarVol2017[i])
+}
+
+library(knitr)
+kable(tabMoyHigh2017, caption = "test")
+```
+
 
 ### Cours de toutes les cryptos
 
