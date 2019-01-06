@@ -1,8 +1,8 @@
 #Corrélogramme : visualisation de la matrice de corrélation des open
-corrplot(corrO, method="ellipse",type="lower")
+corrplot(corrO, type="lower")
 
 #Corrélogramme : visualisation de la matrice de corrélation des open
-corrplot(corrC, method="pie",type="lower")
+corrplot(corrC, type="lower")
 
 #Corrélogramme : visualisation de la matrice de corrélation des open
 corrplot(corrM, type="lower")

@@ -11,7 +11,9 @@ bitcoin_price_sorted$Year <- as.factor(bitcoin_price_sorted$Year)
 ##courbe de l'évolution du cours du bitfocoin en 2016 & 2017 & 2018
 ##UNIQUE LINE
 ggplot(bitcoin_price_sorted, aes(x=as.Date(DateFormat), y=Open, color=Year, group=Year)) +
-  scale_x_date(name="Months", labels = date_format("%b"), breaks = "1 month")+
+  ggtitle("Évolution du cours du Bitcoin (courbe unique)")+
+  ylab("Valeurs (en $)")+
+  scale_x_date(name="Months", labels = date_format("%b"), breaks = "3 month")+
   geom_line(aes(colour=Year), size=1)
 
 ##courbe de l'évolution du cours du bitfocoin en 2016 & 2017 & 2018

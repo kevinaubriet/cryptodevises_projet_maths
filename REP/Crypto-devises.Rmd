@@ -60,6 +60,10 @@ La récolte de données s'est faite sur des sites plutôt réputés, ou du moins
 * La valeur de toutes les unités de la crypto-monnaie sur le marché (Market.Cap)
 * Variations d'un jour à l'autre du cours du Bitcoin en %
 
+### Traitement des données
+
+Les données que nous avons récupéré ne correspondaient pas parfaitement à un traitement convenable. C'est pourquoi nous avons décidé de les formater.
+
 Nous avons effectué des fonctions de récupération de chaque élément d'une date (jour, mois et année) dans le but de nous faciliter la tâche dans l'exploitation des données et surtout dans la création de graphique.
 ```{r sort_date, echo=TRUE, message=FALSE, warning=FALSE}
 ##Extraction de l'année
@@ -90,7 +94,7 @@ getVariation <- function(str){
 }
 ```
 
-Get data
+La fonction getData permet de tirer d'un String 
 ```{r sort_, echo=TRUE, message=FALSE, warning=FALSE}
 
 getData2015 <-function(src){
@@ -174,6 +178,15 @@ bitcoin_price_sorted2017 <-bitcoin_price_sorted[bitcoin_price_sorted$Year == 201
 
 resultats <- data.frame(Val2015= bitcoin_price_sorted2015$Close, Val2016=bitcoin_price_sorted2016$Close, Val2017=bitcoin_price_sorted2017$Close, Moi=bitcoin_price_sorted2015$Month ,Jour=bitcoin_price_sorted2015$DateFormat)
 ```
+
+```{r plot_evolution_cours_btc_uniqueLine, echo=TRUE, message=FALSE, warning=FALSE}
+ggplot(bitcoin_price_sorted, aes(x=as.Date(DateFormat), y=Open, color=Year, group=Year)) +
+  ggtitle("Évolution du cours du Bitcoin (courbe unique)")+
+  ylab("Valeurs (en $)")+
+  scale_x_date(name="Months", labels = date_format("%b"), breaks = "3 month")+
+  geom_line(aes(colour=Year), size=1)
+```
+
 
 ```{r plot_evolution_cours_btc, echo=TRUE, message=FALSE, warning=FALSE}
 
@@ -368,8 +381,14 @@ rownames(corrM) <- c("bitcoin_cash", "bitcoin", "bitconnect", "dash", "ethereum_
 
 CORRELOGRAMMES
 ```{r plot_corr, echo=TRUE, message=FALSE, warning=FALSE}
-#Corrélogramme : visualisation de la matrice de corrélation des open
-corrplot(corrC, type="lower")
+#Corrélogramme : visualisation de la matrice de corrélation des Open
+corrplot(corrO, title="Matrice de corrélation des valeurs Open", type="lower")
+
+#Corrélogramme : visualisation de la matrice de corrélation des Close
+corrplot(corrC, title="Matrice de corrélation des valeurs Close",type="lower")
+
+#Corrélogramme : visualisation de la matrice de corrélation des Market.Cap
+corrplot(corrM, title="Matrice de corrélation des valeurs Market.Cap", type="lower")
 ```
 
 
