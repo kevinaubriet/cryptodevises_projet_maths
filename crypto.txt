@@ -1,0 +1,17 @@
+bitcoin_cash
+bitcoin
+bitconnect
+dash
+ethereum_classic
+ethereum
+iota
+litecoin
+nem
+monero
+numeraire
+omisego
+neo
+ripple
+stratis
+qtum
+waves
