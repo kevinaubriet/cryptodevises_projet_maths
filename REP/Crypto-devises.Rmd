@@ -32,13 +32,20 @@ library(corrplot)
 library(forcats)
 ```
 
-# Présentation du groupe et du rôle de chacun <a name="groupe"></a>
+# Présentation du groupe et du rôle de chacun
 
-# Descriptif sujet et ses finalités <a name="descriptif"></a>
+# Descriptif sujet et ses finalités
 
-# Méthodologie suivie pour répondre aux questions <a name="methodologie"></a>
+Depuis plusieurs années, le phénomène de la crypto-monnaie prend de plus en plus de place dans nos mondes bancaires et financiers. Il s’agit d’une monnaie virtuelle et cryptée, c’est-à-dire qu’elle n’est utilisable que par une personne possédant le code permettant de décrypter la monnaie.
+Comparées aux monnaies ordinaires, les cryptomonnaies sont gérées par un grand livre de comptes ouvert et consultable par tous (la blockchain) qui répertorie l'ensemble des transactions depuis l'origine. Ainsi, nous voudrons faire quelques considérations en exploitant les données qui nous sont mises à disposition par la blockchain.
 
-# Données utilisées <a name="donnees"></a>
+L’objectif de notre projet est d’utiliser les données des cours des crypto-devises de 2015, 2016 et 2017. Cela a pour but de calculer la moyenne et la variance d’un certain nombre de variables comme le cours du Bitcoin, la valeur des transactions et la part de marché par crypto-monnaies. Nous avons également effectué un test de corrélation pour vérifier si les autres crypto-devises sont ou pas corrélées au Bitcoin.
+
+# Méthodologie suivie pour répondre aux questions
+
+
+
+# Données utilisées
 
 Premièrement, nous avons recherché des données sur l'évolution du cours du Bitcoin depuis ces dernières années. En suite, il était important de faire coïncider ces données avec l'évolution du cours des autres crypto-monnaies majeures : Etherum, Litecoin, Dash, Monero, Ripple, Nem. Finalement, nous sommes parvenus à trouver des fichiers au format CSV (facilement exploitable) qui contiennent la quasi totalité des données que nous recherchions de 2013 à 2018 pour chaque monnaie.
 
@@ -382,13 +389,13 @@ rownames(corrM) <- c("bitcoin_cash", "bitcoin", "bitconnect", "dash", "ethereum_
 CORRELOGRAMMES
 ```{r plot_corr, echo=TRUE, message=FALSE, warning=FALSE}
 #Corrélogramme : visualisation de la matrice de corrélation des Open
-corrplot(corrO, title="Matrice de corrélation des valeurs Open", type="lower")
+corrplot(corrO, title="Matrice de corrélation des valeurs Open", mar=c(0,0,1,0), type="lower")
 
 #Corrélogramme : visualisation de la matrice de corrélation des Close
-corrplot(corrC, title="Matrice de corrélation des valeurs Close",type="lower")
+corrplot(corrC, title="Matrice de corrélation des valeurs Close", mar=c(0,0,1,0), type="lower")
 
 #Corrélogramme : visualisation de la matrice de corrélation des Market.Cap
-corrplot(corrM, title="Matrice de corrélation des valeurs Market.Cap", type="lower")
+corrplot(corrM, title="Matrice de corrélation des valeurs Market.Cap", mar=c(0,0,1,0), type="lower")
 ```
 
 
