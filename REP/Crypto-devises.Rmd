@@ -224,7 +224,7 @@ graphsC <- read.csv("../data/all/final_csv_close.csv")
 graphsM <- read.csv("../data/all/final_csv_market_cap.csv")
 ```
 
-
+FONCTION CORRELATION TABLE
 ```{r calcul_matrice_corr, echo=TRUE, message=FALSE, warning=FALSE}
 
 #calcule de la matrice de corrélation
@@ -247,6 +247,7 @@ correlationTable <- function(graphs) {
   cross
 }
 ```
+
 
 ```{r format_corr, message=FALSE, warning=FALSE, include=FALSE}
 #graphs de corrélation des open (bitcoin par rapport aux autres crypto)
@@ -272,7 +273,7 @@ rownames(corrM) <- c("bitcoin_cash", "bitcoin", "bitconnect", "dash", "ethereum_
                     "litecoin", "nem", "monero", "numeraire", "omisego", "neo", "ripple", "stratis", "qtum", "waves")
 ```
 
-
+CORRELOGRAMMES
 ```{r plot_corr, echo=TRUE, message=FALSE, warning=FALSE}
 #Corrélogramme : visualisation de la matrice de corrélation des open
 corrplot(corrO, method="ellipse",type="lower")
