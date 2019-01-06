@@ -77,6 +77,3 @@ for(j in 1:nrow(variationBtc)){
 variationBtc_sorted <- variationBtc[variationBtc$Year >= 2016,]
 variationBtc_sorted<- variationBtc_sorted[,-2]
 variationBtc_sorted<- variationBtc_sorted[,-2]
-
-
-

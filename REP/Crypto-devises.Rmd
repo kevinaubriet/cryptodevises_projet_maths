@@ -1,33 +1,175 @@
 ---
 title: "Crypto-devises"
 author: "Habiba BOUAJLA, Kevin AUBRIET & Gabriel CURINGA"
-date: "05/01/2019"
+date: "07/01/2019"
 output: html_document
 ---
+
+<style>
+body {
+text-align: justify
+}
+</style>
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-## R Markdown
+```{r sort_import, message=FALSE, warning=FALSE, include=FALSE}
+##import librairies
+library(readr)
+library(stringr)
+library(lubridate)
+```
 
 # Table des matières
+- [Présentation du groupe et du rôle de chacun](#groupe)
 - [Descriptif sujet et ses finalités](#descriptif)
 - [Données utilisées](#donnees)
 - [Méthodologie suivie pour répondre aux questions](#methodologie)
 - [Résultats obtenus et visualisation graphique](#resultats)
-- [Présentation du groupe et du rôle de chacun](#groupe)
 
-## Descriptif sujet et ses finalités <a name="descriptif"></a>
+# Présentation du groupe et du rôle de chacun <a name="groupe"></a>
 
-## Données utilisées <a name="donnees"></a>
+# Descriptif sujet et ses finalités <a name="descriptif"></a>
 
-## Méthodologie suivie pour répondre aux questions <a name="methodologie"></a>
+# Méthodologie suivie pour répondre aux questions <a name="methodologie"></a>
 
-## Résultats obtenus et visualisation graphique <a name="resultats"></a>
+# Données utilisées <a name="donnees"></a>
 
+Premièrement, nous avons recherché des données sur l'évolution du cours du Bitcoin depuis ces dernières années. En suite, il était important de faire coïncider ces données avec l'évolution du cours des autres crypto-monnaies majeures : Etherum, Litecoin, Dash, Monero, Ripple, Nem. Finalement, nous sommes parvenus à trouver des fichiers au format CSV (facilement exploitable) qui contiennent la quasi totalité des données que nous recherchions de 2013 à 2018 pour chaque monnaie.
 
+### Sources des données
 
-## Présentation du groupe et du rôle de chacun <a name="groupe"></a>
+La récolte de données s'est faite sur des sites plutôt réputés, ou du moins dont on est sûrs de la véracité de celles-ci.
+
+* [data.gouv.fr](https://www.data.gouv.fr)
+* [kaggle.com](https://www.kaggle.com/dbarkhorn/crypto-correlation/data)
+
+### Données récoltées
+
+* En dollars
+    + Prix du premier achat du jour (Open)
+    + Prix du dernier achat du jour (Close)
+    + Prix le plus bas du jour (Low)
+    + Prix le plus haut du jour (High)
+* La valeur de toutes les unités de la crypto-monnaie échangées dans la journée (Volume)
+* La valeur de toutes les unités de la crypto-monnaie sur le marché (Market.Cap)
+* Variations d'un jour à l'autre du cours du Bitcoin en %
+
+Nous avons effectué des fonctions de récupération de chaque élément d'une date (jour, mois et année) dans le but de nous faciliter la tâche dans l'exploitation des données et surtout dans la création de graphique.
+```{r sort_date, echo=TRUE, message=FALSE, warning=FALSE}
+##Extraction de l'année
+getYear <- function(str) {
+  res <- str_split(str, ", ")[[1]][[length(str_split(str, ", ")[[1]])]]
+  return(res)
+}
+##Extraction du mois
+getMonth <- function(str){
+  res <- str_split(str, ", ")[[1]][1]
+  res <- str_split(res, " ")[[1]][1]
+  return(res)
+}
+##Extraction du jour
+getDay <- function(str){
+  res <- str_split(str, ", ")[[1]][1]
+  res <- str_split(res, " ")[[1]][2]
+  return(res)
+}
+```
+
+Cette fonction
+```{r sort_get_variation, echo=TRUE, message=FALSE, warning=FALSE}
+getVariation <- function(str){
+  res <- str_replace(str, "%", "")
+  return(res)
+}
+```
+
+Récupération des données 
+```{r sort_, echo=TRUE, message=FALSE, warning=FALSE}
+getData2015 <-function(src){
+  res <- read.csv(src)
+  ##Ajout des colonnes jour, mois et année
+  ##pour faciliter le traitement des données
+  for (i in 1:nrow(res)) {
+    res$Day[i] <- as.numeric(getDay(res$Date[i]))
+    res$Month[i] <- match(getMonth(res$Date[i]), month.abb)
+    res$Year[i] <- as.numeric(getYear(res$Date[i]))
+    
+    ##Creation d'une nouvelle colonne Date
+    ##Du type date plus exploitable
+    date <- paste(res$Year[i], res$Month[i], sep = "-", collapse=NULL)
+    date <- paste(date, res$Day[i], sep = "-", collapse=NULL)
+    res$DateFormat[i] <- format(as.Date(date))
+    
+  }
+  ##on ne conserve que les données datant au minimum de 2015
+  resF<-res[res$Year>=2015,]
+  
+  ##tri dans l'ordre des années puis des mois
+  resF <- resF[order(month(resF$Day)),]
+  resF <- resF[order(month(resF$Month)),]
+  resF <- resF[order(month(resF$Year)),]
+  
+  return(resF)
+}
+```
+
+```{r sort_recup_datas, echo=TRUE, message=FALSE, warning=FALSE}
+variationBtc <- read_csv("../data/bitcoin_variation.csv")
+bitcoin_price_sorted<-getData2015("../data/all/bitcoin_price.csv")
+
+##Creation d'une nouvelle colonne Date
+##Du type date plus exploitable
+for(j in 1:nrow(variationBtc)){
+  variationBtc$Year[j] <- as.numeric(year(variationBtc$Date[j]))
+  variationBtc$Month[j] <- as.numeric(month(variationBtc$Date[j]))
+  variationBtc$Variation[j] <- as.numeric(getVariation(variationBtc$`Variation 24h`[j]))
+}
+
+##on ne conserve que les données datant au minimum de 2015
+variationBtc_sorted <- variationBtc[variationBtc$Year >= 2016,]
+variationBtc_sorted<- variationBtc_sorted[,-2]
+variationBtc_sorted<- variationBtc_sorted[,-2]
+```
+
+# Résultats obtenus et visualisation graphique <a name="resultats"></a>
+
+```{r plot_variations_btc, echo=TRUE, message=FALSE, warning=FALSE}
+library(ggplot2)
+library(reshape2)
+library(tidyr)
+library(scales)
+
+variationBtc_sorted_2016 <- variationBtc_sorted[variationBtc_sorted$Year == 2016,]
+variationBtc_sorted_2016 <- variationBtc_sorted_2016[-60,]
+
+variationBtc_sorted_2017 <- variationBtc_sorted[variationBtc_sorted$Year == 2017,]
+
+## Création d'un nouveau data frame
+## Plus exploitable
+df <- data.frame(Val2016 = variationBtc_sorted_2016$Variation, 
+                 Val2017 = variationBtc_sorted_2017$Variation, 
+                 Month=variationBtc_sorted_2016$Month,
+                 Date=variationBtc_sorted_2016$Date)
+
+datas <- gather(
+  data = df,
+  key = TYPE,
+  value = VAL,
+  Val2016, Val2017
+)
+
+## Variations du cours du bitcoin en 2016 & 2017
+## En %
+
+ggplot(
+  datas,
+  aes(x = as.Date(Date), y = VAL, color = TYPE),)+
+  scale_x_date(name="Months", labels = date_format("%b"), breaks = "1 month")+
+  geom_line()
+```
+
 
 
