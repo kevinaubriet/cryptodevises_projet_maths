@@ -58,20 +58,12 @@ getData2015 <-function(src){
 
 #récupération des données
 bitcoin_price_sorted<-getData2015("data/all/bitcoin_price.csv")
- #bitconnect_price_sorted<-getData2015("data/all/bitconnect_price.csv")
-#dash_price_sorted<-getData2015("data/all/dash_price.csv")
-#ethereum_price_sorted<-getData2015("data/all/ethereum_price.csv")
-#iota_price_sorted<-getData2015("data/all/iota_price.csv")
-#litecoin_price_sorted<-getData2015("data/all/litecoin_price.csv")
-#monero_price_sorted<-getData2015("data/all/monero_price.csv")
-#nem_price_sorted<-getData2015("data/all/nem_price.csv")
-#neo_price_sorted<-getData2015("data/all/neo_price.csv")
-#numeraire_price_sorted<-getData2015("data/all/numeraire_price.csv")
-#omisego_price_sorted<-getData2015("data/all/omisego_price.csv")
-#qtum_price_sorted<-getData2015("data/all/qtum_price.csv")
-#ripple_price_sorted<-getData2015("data/all/ripple_price.csv")
-#stratis_price_sorted<-getData2015("data/all/stratis_price.csv")
-#waves_price_sorted<-getData2015("data/all/waves_price.csv")
+dash_price_sorted<-getData2015("data/all/dash_price.csv")
+ethereum_price_sorted<-getData2015("data/all/ethereum_price.csv")
+litecoin_price_sorted<-getData2015("data/all/litecoin_price.csv")
+monero_price_sorted<-getData2015("data/all/monero_price.csv")
+nem_price_sorted<-getData2015("data/all/nem_price.csv")
+ripple_price_sorted<-getData2015("data/all/ripple_price.csv")
 
 ##Creation d'une nouvelle colonne Date
 ##Du type date plus exploitable
