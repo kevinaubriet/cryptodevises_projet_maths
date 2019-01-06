@@ -44,4 +44,8 @@ pourcentage_affichage <- round(pourcentages,2)
 # Ajouter les étiquettes
 text_pie(pourcentages,c(pourcentage_affichage[1],pourcentage_affichage[2],pourcentage_affichage[3],pourcentage_affichage[4], "", "" ,pourcentage_affichage[6]),cex=1.1) # Ces valeurs en % sont à remplacer manuellement
 
-legend(x="bottomright", legend=c("bitcoin","dash","ethereum","litecoin","monero","nem","ripple"), cex=1.2,fill=c("#FF0101","#4401FF","#01BBFF","#01FF4D","#F7FF01","#EE01FF","#FF9101"))
+legend(x="bottomright", legend=c("bitcoin","dash","ethereum","litecoin","monero","nem","ripple"), cex=1,fill=c("#FF0101","#4401FF","#01BBFF","#01FF4D","#F7FF01","#EE01FF","#FF9101"))
+
+
+
+
