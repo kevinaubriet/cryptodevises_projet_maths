@@ -77,11 +77,12 @@ bitcoin_price_sorted<-getData2015("data/all/bitcoin_price.csv")
 ##Du type date plus exploitable
 for(j in 1:nrow(variationBtc)){
   variationBtc$Year[j] <- as.numeric(year(variationBtc$Date[j]))
+  variationBtc$Month[j] <- as.numeric(month(variationBtc$Date[j]))
   variationBtc$Variation[j] <- as.numeric(getVariation(variationBtc$`Variation 24h`[j]))
 }
 
 ##on ne conserve que les données datant au minimum de 2015
-variationBtc_sorted <- variationBtc[variationBtc$Year >= 2015,]
+variationBtc_sorted <- variationBtc[variationBtc$Year >= 2016,]
 variationBtc_sorted<- variationBtc_sorted[,-2]
 variationBtc_sorted<- variationBtc_sorted[,-2]
 

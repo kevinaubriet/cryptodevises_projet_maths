@@ -1,32 +1,31 @@
 library(ggplot2)
 library(reshape2)
+library(tidyr)
+
 variationBtc_sorted_2016 <- variationBtc_sorted[variationBtc_sorted$Year == 2016,]
-#variationBtc_sorted_2016$Date <- as.yearmon(variationBtc_sorted_2016$Date)
+variationBtc_sorted_2016 <- variationBtc_sorted_2016[-60,]
 
 variationBtc_sorted_2017 <- variationBtc_sorted[variationBtc_sorted$Year == 2017,]
-#variationBtc_sorted_2017$Date <- as.yearmon(variationBtc_sorted_2017$Date)
 
-#variationBtc_sorted$Year <- as.factor(variationBtc_sorted$Year)
+## Création d'un nouveau data frame
+## Plus exploitable
+df <- data.frame(Val2016 = variationBtc_sorted_2016$Variation, 
+                 Val2017 = variationBtc_sorted_2017$Variation, 
+                 Month=variationBtc_sorted_2016$Month,
+                 Date=variationBtc_sorted_2016$Date)
 
+datas <- gather(
+  data = df,
+  key = TYPE,
+  value = VAL,
+  Val2016, Val2017
+)
 
-plot(variationBtc_sorted_2016$Variation ~ variationBtc_sorted_2016$Date, main="Titre", ylab="Axe y", xlab="Axe x", type="l",
-     col="blue")
-lines(variationBtc_sorted_2017$Variation ~ variationBtc_sorted_2016$Date, col="red", type="l")
-legend("topleft", c("Courbe 1", "Courbe 2"), fill=c("blue","red"))
+## Variations du cours du bitcoin en 2016 & 2017
+## En %
 
-variationBtc_sorted_melt <- melt(variationBtc_sorted, id.vars='Date', variable.name = 'Variation')
-ggplot(variationBtc_sorted_melt, aes(Date, Variation))+
-  geom_line(aes(colour = year(Date)))
-
-ggplot(rbind(variationBtc_sorted_2016, variationBtc_sorted_2017), 
-       aes(month(Date, label=TRUE, abbr=TRUE), 
-           Variation, 
-           group=factor(year(Date)),
-           colour=factor(year(Date)))) +
-  geom_line() +
-  labs(x="Month", colour="Year") +
-  theme_classic()
-
-#ggplot(variationBtc_sorted, aes(x=Date, y=Variation, group=year(as.Date(Date)))) +
-  #scale_x_date(name="Months", labels = date_format("%b"), breaks = "1 month")+
-  #geom_line(aes(colour=Year), size=1)
+ggplot(
+  datas,
+  aes(x = as.Date(Date), y = VAL, color = TYPE),)+
+  scale_x_date(name="Months", labels = date_format("%b"), breaks = "1 month")+
+  geom_line()
