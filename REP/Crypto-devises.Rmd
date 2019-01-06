@@ -117,7 +117,7 @@ getVariation <- function(str){
 }
 ```
 
-La fonction getData permet de tirer d'un String 
+La fonction getData prend en parametre la source d'un fichier csv.En effet, nous avons récupérer un groupe de fichier csv (comprenant chacun les données d'une crypto-monnaie) qui disposait de la même structure, nous avons donc fait une fonction pour pouvoir les traiter. La fonction va lire le csv, ensuite rajouter 3 colonnes pour faciliter le traitement de la date (la date du tableaux de données étaient inexploitables). Grace à tout cela, nous avons trier notre tableau pour garder que les données concernant les années passées 2015.
 ```{r sort_, echo=TRUE, message=FALSE, warning=FALSE}
 
 getData2015 <-function(src){
