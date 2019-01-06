@@ -20,9 +20,26 @@ correlationTable <- function(graphs) {
   cross
 }
 
-#graphique de corrélation du bitcoin par rapport aux autres crypto
-graphs <- read.csv("data/all/final_csv_market_cap.csv")
-corr <- correlationTable(graphs)
-corrplot(corr, method="circle") #on peut mettre d'autre forme
+#graphs de corrélation des open (bitcoin par rapport aux autres crypto)
+graphsO <- read.csv("data/all/final_csv_open.csv")
+corrO <- correlationTable(graphsO)
 
-#rajouter une legende si le temps
+#graphs de corrélation des close (bitcoin par rapport aux autres crypto)
+graphsC <- read.csv("data/all/final_csv_close.csv")
+corrC <- correlationTable(graphsC)
+
+#graphs de corrélation des market cap (bitcoin par rapport aux autres crypto)
+graphsM <- read.csv("data/all/final_csv_market_cap.csv")
+corrM <- correlationTable(graphs)
+
+
+#Corrélogramme : visualisation de la matrice de corrélation des open
+corrplot(corrO, method="ellipse",type="lower")
+
+#Corrélogramme : visualisation de la matrice de corrélation des open
+corrplot(corrC, method="pie",type="lower")
+
+#Corrélogramme : visualisation de la matrice de corrélation des open
+corrplot(corrM, type="lower")
+
+
