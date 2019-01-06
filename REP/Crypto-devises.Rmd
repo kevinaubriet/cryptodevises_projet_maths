@@ -83,6 +83,7 @@ getDay <- function(str){
 }
 ```
 
+
 Souvent, nous avons dû traiter les données déjà présentes dans les fichiers CSV pour les formater de manières à ce qu'elles soient exploitables. Par exemple, ci-dessous nous avons dû créer une fonction qui retire le symbole "%".
 ```{r sort_get_variation, echo=TRUE, message=FALSE, warning=FALSE}
 getVariation <- function(str){
@@ -93,6 +94,7 @@ getVariation <- function(str){
 
 Get data
 ```{r sort_, echo=TRUE, message=FALSE, warning=FALSE}
+
 getData2015 <-function(src){
   res <- read.csv(src)
   ##Ajout des colonnes jour, mois et année
@@ -119,6 +121,26 @@ getData2015 <-function(src){
   
   return(resF)
 }
+```
+
+```{r import_datas, message=FALSE, warning=FALSE, include=FALSE}
+#récupération des données
+bitcoin_price_sorted<-getData2015("../data/all/bitcoin_price.csv")
+dash_price_sorted<-getData2015("../data/all/dash_price.csv")
+ethereum_price_sorted<-getData2015("../data/all/ethereum_price.csv")
+litecoin_price_sorted<-getData2015("../data/all/litecoin_price.csv")
+monero_price_sorted<-getData2015("../data/all/monero_price.csv")
+nem_price_sorted<-getData2015("../data/all/nem_price.csv")
+ripple_price_sorted<-getData2015("../data/all/ripple_price.csv")
+
+#graphs de corrélation des open (bitcoin par rapport aux autres crypto)
+graphsO <- read.csv("../data/all/final_csv_open.csv")
+
+#graphs de corrélation des close (bitcoin par rapport aux autres crypto)
+graphsC <- read.csv("../data/all/final_csv_close.csv")
+
+#graphs de corrélation des market cap (bitcoin par rapport aux autres crypto)
+graphsM <- read.csv("../data/all/final_csv_market_cap.csv")
 ```
 
 ```{r sort_recup_datas, message=FALSE, warning=FALSE, include=FALSE}
@@ -210,19 +232,58 @@ ggplot(
   geom_line()
 ```
 
+### Part de marché par crypto-monnaies
+
+```{r part_crypto_market, echo=FALSE, message=FALSE, warning=FALSE}
+getLastMarketCap<-function(tab){
+  tab$Year <- as.factor(tab$Year)
+  col<-tab$Market.Cap
+  val<-tail(col,1)
+  val <- str_replace_all(val, ",", "")
+  res<-as.numeric(val)
+  
+  return(res)
+}
+
+bitcoin_marketcap <- getLastMarketCap(bitcoin_price_sorted)
+dash_marketcap <- getLastMarketCap(dash_price_sorted)
+ethereum_marketcap <- getLastMarketCap(ethereum_price_sorted)
+litecoin_marketcap <- getLastMarketCap(litecoin_price_sorted)
+monero_marketcap <- getLastMarketCap(monero_price_sorted)
+nem_marketcap <- getLastMarketCap(nem_price_sorted)
+ripple_marketcap <- getLastMarketCap(ripple_price_sorted)
+
+tab = c(bitcoin_marketcap,dash_marketcap,ethereum_marketcap,litecoin_marketcap,monero_marketcap,nem_marketcap,ripple_marketcap)
+
+pie(tab,main="Part des crypto-monnaies (en%)",col = c("#FF0101","#4401FF","#01BBFF","#01FF4D","#F7FF01","#EE01FF","#FF9101"),labels = c("bitcoin","dash","ethereum","litecoin","","","ripple"),cex=1.5)
+
+
+# Calculer pourcentages correspondant à chaque valeurs
+total = sum(tab)
+pourcentages = tab/total*100 ; cat("Les valeurs en % sont de :",pourcentages,"\n")
+# Fonction à coller dans R - cette fonction text_pie permet d'ajouter des étiquettes au centre des quartiers
+text_pie = function(vector,labels=c(),cex=1) {
+  vector = vector/sum(vector)*2*pi
+  temp = c()
+  j = 0
+  l = 0
+  for (i in 1:length(vector)) {
+    k = vector[i]/2        
+    j =  j+l+k
+    l = k
+    text(cos(j)/2,sin(j)/2,labels[i],cex=cex)
+  }
+  vector = temp
+}
+pourcentage_affichage <- round(pourcentages,2)
+# Ajouter les étiquettes
+text_pie(pourcentages,c(pourcentage_affichage[1],pourcentage_affichage[2],pourcentage_affichage[3],pourcentage_affichage[4], "", "" ,pourcentage_affichage[6]),cex=1.1) # Ces valeurs en % sont à remplacer manuellement
+
+legend(x="bottomright", legend=c("bitcoin","dash","ethereum","litecoin","monero","nem","ripple"), cex=1.2,fill=c("#FF0101","#4401FF","#01BBFF","#01FF4D","#F7FF01","#EE01FF","#FF9101"))
+```
+
 
 ### Tests de corrélations
-
-```{r read_datas_corr, message=FALSE, warning=FALSE, include=FALSE}
-#graphs de corrélation des open (bitcoin par rapport aux autres crypto)
-graphsO <- read.csv("../data/all/final_csv_open.csv")
-
-#graphs de corrélation des close (bitcoin par rapport aux autres crypto)
-graphsC <- read.csv("../data/all/final_csv_close.csv")
-
-#graphs de corrélation des market cap (bitcoin par rapport aux autres crypto)
-graphsM <- read.csv("../data/all/final_csv_market_cap.csv")
-```
 
 FONCTION CORRELATION TABLE
 ```{r calcul_matrice_corr, echo=TRUE, message=FALSE, warning=FALSE}
@@ -276,13 +337,7 @@ rownames(corrM) <- c("bitcoin_cash", "bitcoin", "bitconnect", "dash", "ethereum_
 CORRELOGRAMMES
 ```{r plot_corr, echo=TRUE, message=FALSE, warning=FALSE}
 #Corrélogramme : visualisation de la matrice de corrélation des open
-corrplot(corrO, method="ellipse",type="lower")
-
-#Corrélogramme : visualisation de la matrice de corrélation des open
-corrplot(corrC, method="pie",type="lower")
-
-#Corrélogramme : visualisation de la matrice de corrélation des open
-corrplot(corrM, type="lower")
+corrplot(corrC, type="lower")
 ```
 
 

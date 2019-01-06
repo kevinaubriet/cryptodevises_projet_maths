@@ -20,7 +20,7 @@ ripple_marketcap <- getLastMarketCap(ripple_price_sorted)
 
 tab = c(bitcoin_marketcap,dash_marketcap,ethereum_marketcap,litecoin_marketcap,monero_marketcap,nem_marketcap,ripple_marketcap)
 
-pie(tab,main="Part des cryptomonaies (en%)",col = c("#FF0101","#4401FF","#01BBFF","#01FF4D","#F7FF01","#EE01FF","#FF9101"),labels = c("bitcoin","dash","ethereum","litecoin","","","ripple"),cex=1.5)
+pie(tab,main="Part des crypto-monnaies (en%)",col = c("#FF0101","#4401FF","#01BBFF","#01FF4D","#F7FF01","#EE01FF","#FF9101"),labels = c("bitcoin","dash","ethereum","litecoin","","","ripple"),cex=1.5)
 
 
 # Calculer pourcentages correspondant à chaque valeurs
