@@ -44,7 +44,7 @@ corrplot(corrC, method="pie",type="lower")
 
 #graphs de corrélation des market cap (bitcoin par rapport aux autres crypto)
 graphsM <- read.csv("data/all/final_csv_market_cap.csv")
-corrM <- correlationTable(graphs)
+corrM <- correlationTable(graphsM)
 colnames(corrM) <- c("bitcoin_cash", "bitcoin", "bitconnect", "dash", "ethereum_classic", "ethereum", "iota",
                     "litecoin", "nem", "monero", "numeraire", "omisego", "neo", "ripple", "stratis", "qtum", "waves")
 rownames(corrM) <- c("bitcoin_cash", "bitcoin", "bitconnect", "dash", "ethereum_classic", "ethereum", "iota",
