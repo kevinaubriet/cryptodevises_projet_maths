@@ -55,7 +55,7 @@ getData2015 <-function(src){
   return(resF)
 }
 
-#récupération des données
+#récupération des données de toutes les cryptomonnaies depuis 2015
 bitcoin_price_sorted<-getData2015("data/all/bitcoin_price.csv")
 dash_price_sorted<-getData2015("data/all/dash_price.csv")
 ethereum_price_sorted<-getData2015("data/all/ethereum_price.csv")
@@ -82,7 +82,7 @@ for(j in 1:nrow(variationBtc)){
   variationBtc$Variation[j] <- as.numeric(getVariation(variationBtc$`Variation 24h`[j]))
 }
 
-##on ne conserve que les données datant au minimum de 2015
+##on ne conserve que les données datant au minimum de 2016
 variationBtc_sorted <- variationBtc[variationBtc$Year >= 2016,]
 variationBtc_sorted<- variationBtc_sorted[,-2]
 variationBtc_sorted<- variationBtc_sorted[,-2]
