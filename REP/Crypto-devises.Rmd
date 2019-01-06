@@ -24,6 +24,7 @@ library(ggplot2)
 library(reshape2)
 library(tidyr)
 library(scales)
+library(corrplot)
 ```
 
 # Table des matières
@@ -209,5 +210,78 @@ ggplot(
   geom_line()
 ```
 
+
+### Tests de corrélations
+
+```{r read_datas_corr, message=FALSE, warning=FALSE, include=FALSE}
+#graphs de corrélation des open (bitcoin par rapport aux autres crypto)
+graphsO <- read.csv("../data/all/final_csv_open.csv")
+
+#graphs de corrélation des close (bitcoin par rapport aux autres crypto)
+graphsC <- read.csv("../data/all/final_csv_close.csv")
+
+#graphs de corrélation des market cap (bitcoin par rapport aux autres crypto)
+graphsM <- read.csv("../data/all/final_csv_market_cap.csv")
+```
+
+
+```{r calcul_matrice_corr, echo=TRUE, message=FALSE, warning=FALSE}
+
+#calcule de la matrice de corrélation
+correlationTable <- function(graphs) {
+  #matrice de corrélation
+  cross <- matrix(nrow = length(graphs), ncol = length(graphs))
+  for(graph1Id in 1:length(graphs)){
+    graph1 <- graphs[[graph1Id]]
+    print(graph1Id)
+    for(graph2Id in 1:length(graphs)) {
+      graph2 <- graphs[[graph2Id]]
+      if(graph1Id == graph2Id){
+        break;
+      } else {
+        correlation <- ccf(graph1, graph2, lag.max = 0)
+        cross[graph1Id, graph2Id] <- correlation$acf[1]
+      }
+    }
+  }
+  cross
+}
+```
+
+```{r format_corr, message=FALSE, warning=FALSE, include=FALSE}
+#graphs de corrélation des open (bitcoin par rapport aux autres crypto)
+corrO <- correlationTable(graphsO)
+#renommage des colnames et rownames
+colnames(corrO) <- c("bitcoin_cash", "bitcoin", "bitconnect", "dash", "ethereum_classic", "ethereum", "iota",
+                    "litecoin", "nem", "monero", "numeraire", "omisego", "neo", "ripple", "stratis", "qtum", "waves")
+rownames(corrO) <- c("bitcoin_cash", "bitcoin", "bitconnect", "dash", "ethereum_classic", "ethereum", "iota",
+                    "litecoin", "nem", "monero", "numeraire", "omisego", "neo", "ripple", "stratis", "qtum", "waves")
+
+#graphs de corrélation des close (bitcoin par rapport aux autres crypto)
+corrC <- correlationTable(graphsC)
+colnames(corrC) <- c("bitcoin_cash", "bitcoin", "bitconnect", "dash", "ethereum_classic", "ethereum", "iota",
+                    "litecoin", "nem", "monero", "numeraire", "omisego", "neo", "ripple", "stratis", "qtum", "waves")
+rownames(corrC) <- c("bitcoin_cash", "bitcoin", "bitconnect", "dash", "ethereum_classic", "ethereum", "iota",
+                    "litecoin", "nem", "monero", "numeraire", "omisego", "neo", "ripple", "stratis", "qtum", "waves")
+
+#graphs de corrélation des market cap (bitcoin par rapport aux autres crypto)
+corrM <- correlationTable(graphsM)
+colnames(corrM) <- c("bitcoin_cash", "bitcoin", "bitconnect", "dash", "ethereum_classic", "ethereum", "iota",
+                    "litecoin", "nem", "monero", "numeraire", "omisego", "neo", "ripple", "stratis", "qtum", "waves")
+rownames(corrM) <- c("bitcoin_cash", "bitcoin", "bitconnect", "dash", "ethereum_classic", "ethereum", "iota",
+                    "litecoin", "nem", "monero", "numeraire", "omisego", "neo", "ripple", "stratis", "qtum", "waves")
+```
+
+
+```{r plot_corr, echo=TRUE, message=FALSE, warning=FALSE}
+#Corrélogramme : visualisation de la matrice de corrélation des open
+corrplot(corrO, method="ellipse",type="lower")
+
+#Corrélogramme : visualisation de la matrice de corrélation des open
+corrplot(corrC, method="pie",type="lower")
+
+#Corrélogramme : visualisation de la matrice de corrélation des open
+corrplot(corrM, type="lower")
+```
 
 

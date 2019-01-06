@@ -1,5 +1,4 @@
 ##import librairies
-
 library(readr)
 library(stringr)
 library(lubridate)
@@ -64,6 +63,16 @@ litecoin_price_sorted<-getData2015("data/all/litecoin_price.csv")
 monero_price_sorted<-getData2015("data/all/monero_price.csv")
 nem_price_sorted<-getData2015("data/all/nem_price.csv")
 ripple_price_sorted<-getData2015("data/all/ripple_price.csv")
+
+#graphs de corrélation des open (bitcoin par rapport aux autres crypto)
+graphsO <- read.csv("data/all/final_csv_open.csv")
+
+#graphs de corrélation des close (bitcoin par rapport aux autres crypto)
+graphsC <- read.csv("data/all/final_csv_close.csv")
+
+#graphs de corrélation des market cap (bitcoin par rapport aux autres crypto)
+graphsM <- read.csv("data/all/final_csv_market_cap.csv")
+
 
 ##Creation d'une nouvelle colonne Date
 ##Du type date plus exploitable
