@@ -197,7 +197,7 @@ $(document).ready(function () {
 <li><a href="#descriptif-du-sujet-et-de-ses-finalites">Descriptif du sujet et de ses finalités</a></li>
 <li><a href="#methodologie-suivie-pour-repondre-aux-questions">Méthodologie suivie pour répondre aux questions</a><ul>
 <li><a href="#environnement-de-travail">Environnement de travail</a></li>
-<li><a href="#traitements-de-donnees-et-graphiques">Traitements de données et graphiques`</a></li>
+<li><a href="#traitements-de-donnees-et-graphiques">Traitements de données et graphiques</a></li>
 </ul></li>
 <li><a href="#donnees-utilisees">Données utilisées</a><ul>
 <li><a href="#sources-des-donnees">Sources des données</a></li>
@@ -251,7 +251,7 @@ text-align: justify
 <p>Tout ce projet se trouve sur un <a href="%22https://github.com/kevinaubriet/cryptodevises_projet_maths.git%22">git</a> (hebergé sur GitHub) pour faciliter le travail en groupe évidemment.</p>
 </div>
 <div id="traitements-de-donnees-et-graphiques" class="section level3">
-<h3>Traitements de données et graphiques`</h3>
+<h3>Traitements de données et graphiques</h3>
 <p>Une fois que l’environnement a été mis en place, nous avons effectué tous les traitements de données/tableaux pour en tirer uniquement les choses utiles.</p>
 <p>La première chose que nous avons fait est de poser l’hypothèse ue la baisse ou la hausse du cours du Bitcoin était favorisée durant différentes périodes sur ces 3 dernières années. C’est alors que nous avons réalisé deux graphiques sur l’évolution du cours Bitcoin de 2015 à 2018 : l’un croisant les courbes des différentes années suivant les mois, et l’autre où les données sont présentes sur une même courbe suivant les mois également.</p>
 <p>Par la suite, nous avons voulu approfondir la vérification de l’hyothèse en réalisant un graphique des variations du cours du Bitcoin en pourcentage (%) d’un jour sur l’autre pendant l’année 2016 et 2017.</p>
@@ -319,7 +319,7 @@ getDay &lt;- function(str){
   res &lt;- str_replace(str, &quot;%&quot;, &quot;&quot;)
   return(res)
 }</code></pre>
-<p>La fonction getData permet de tirer d’un String</p>
+<p>La fonction getData prend en parametre la source d’un fichier csv.En effet, nous avons récupérer un groupe de fichier csv (comprenant chacun les données d’une crypto-monnaie) qui disposait de la même structure, nous avons donc fait une fonction pour pouvoir les traiter. La fonction va lire le csv, ensuite rajouter 3 colonnes pour faciliter le traitement de la date (la date du tableaux de données étaient inexploitables). Grace à tout cela, nous avons trier notre tableau pour garder que les données concernant les années passées 2015.</p>
 <pre class="r"><code>getData2015 &lt;-function(src){
   res &lt;- read.csv(src)
   ##Ajout des colonnes jour, mois et année
