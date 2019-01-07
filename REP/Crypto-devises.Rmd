@@ -217,7 +217,7 @@ variationBtc_sorted<- variationBtc_sorted[,-2]
 > Hypothèse : <span style="color:green">L'évolution du cours du Bitcoin dépend de la période de l'année.</span>
 
 ### Évolution du cours du bitcoin de 2015 à 2017
-Tout d'abord nous avons voulu tracer la courbe de l'évolution du cours du bitcoin sur plusieurs années pour avoir une vue d'ensemble de l'augemnetation de valeur de cette cryptomonnaie.Pour cela, nous avons en premier lieu eu à trier le tableaux dans l'ordre croissant des années afin d'avoir une courbe cohérente. 
+Tout d'abord nous avons voulu tracer la courbe de l'évolution du cours du bitcoin sur plusieurs années pour avoir une vue d'ensemble de l'augmentation de valeur de cette crypto-monnaie. Pour cela, nous avons en premier lieu eu à trier le tableaux dans l'ordre croissant des années afin d'avoir une courbe cohérente. 
 ```{r evolution_cours_btc_formatDatas, message=FALSE, warning=FALSE, include=FALSE}
 bitcoin_price_sorted$Year <- as.factor(bitcoin_price_sorted$Year)
 
@@ -230,7 +230,7 @@ bitcoin_price_sorted2017 <-bitcoin_price_sorted[bitcoin_price_sorted$Year == 201
 
 ```
 
-Nous remarquons dans la courbe générée que le cours du bitcoin est en augmentation constante de 2015 jusqu'en 2017. Le cours du bitcoin subit durant l'année 2017 une évolution exponentielle, le prix d'un bitcoin frole les 20 000 \$, apres ce pic, son cours chute durant l'année pour osciller autour des 10 000 \$.
+Nous remarquons dans la courbe générée que le cours du bitcoin est en augmentation constante de 2015 jusqu'en 2017. Le cours du bitcoin subit durant l'année 2017 une évolution exponentielle, le prix d'un bitcoin frôle les 20 000 \$, après ce pic, son cours chute durant l'année pour osciller autour des 10 000 \$.
 ```{r plot_evolution_cours_btc_uniqueLine, echo=TRUE, message=FALSE, warning=FALSE}
 ggplot(bitcoin_price_sorted, aes(x=as.Date(DateFormat), y=Open, color=Year, group=Year)) +
   ggtitle("Évolution du cours du Bitcoin (courbe unique)")+
@@ -239,9 +239,9 @@ ggplot(bitcoin_price_sorted, aes(x=as.Date(DateFormat), y=Open, color=Year, grou
   geom_line(aes(colour=Year), size=1)
 ```
 
-Afin d'y voir plus clair et de poser une hypothèse sur les variations du cours du bitcoin, nous avons fait le choix de diviser cette courbe en trois courbes representant chaque année. Nous pourrons donc analyser les variations du bitcoin en fonction de la période de l'année et donc comparer le cours des différentes années en fonction des mois car elles seront superposées.
-En analysant cette courbe nous remarquons que les années de 2015 et 2016 du bitcoin subissent les même variations tandis que celle de 2017 en a des beaucoups plus marqués.
-Si l'on regarde bien les variations, on remarque que milieu janvier le court du bitcoin subit une légère baisse de sa valeur peu importe l'année, ce phénomène se produit aussi durant le mois d'août pour toutes les années. Début novembre, une augmenation soudaine du cours est à déplorer pour les années 2015 et 2016. Ses petits pics de variations montre bien que certaine période de l'année sont plus propices à la baisse ou à la hausse de la valeur du bitcoin, la période de l'année influe donc bien le cours du bitcoin
+Afin d'y voir plus clair et de poser une hypothèse sur les variations du cours du bitcoin, nous avons fait le choix de diviser cette courbe en trois courbes représentant chaque année. Nous pourrons donc analyser les variations du bitcoin en fonction de la période de l'année et donc comparer le cours des différentes années en fonction des mois car elles seront superposées.
+En analysant cette courbe nous remarquons que les années de 2015 et 2016 du bitcoin subissent les même variations tandis que celle de 2017 en a des beaucoup plus marquées.
+Si l'on regarde bien les variations, on remarque que milieu janvier le court du bitcoin subit une légère baisse de sa valeur peu importe l'année, ce phénomène se produit aussi durant le mois d'août pour toutes les années. Début novembre, une augmenation soudaine du cours est à déplorer pour les années 2015 et 2016. Ses petits pics de variations montrent bien que certaine période de l'année sont plus propices à la baisse ou à la hausse de la valeur du bitcoin, la période de l'année influe donc bien le cours du bitcoin.
 
 ```{r plot_evolution_cours_btc, echo=TRUE, message=FALSE, warning=FALSE}
 resultats <- data.frame(Val2015= bitcoin_price_sorted2015$Close, Val2016=bitcoin_price_sorted2016$Close, Val2017=bitcoin_price_sorted2017$Close, Moi=bitcoin_price_sorted2015$Month ,Jour=bitcoin_price_sorted2015$DateFormat)
@@ -450,7 +450,7 @@ ripple_price_sorted_all <- getData2016(ripple_price_sorted)
 
 
 ### Part de marché par crypto-monnaies
-Le bitcoin est sans doute la crypto-monnaie qui a son marketcap le plus, haut autrement dit qui la capitalisation boursière (La capitalisation boursière correspond au prix qu'il faudrait payer s'il était possible de racheter toutes les actions) la plus élevée. Nous avons donc fait donc fait un diagramme de type camembert pour visualiser le pourcentage de chaque crypto-monaie. On remarque donc que le bitcoin occupe plus de la moitié des parts du marché, l'ethereum arrive en deuxième place avec 26% et le ripple en troisième place.
+Le bitcoin est sans doute la crypto-monnaie qui a son marketcap le plus, haut autrement dit qui la capitalisation boursière (La capitalisation boursière correspond au prix qu'il faudrait payer s'il était possible de racheter toutes les actions) la plus élevée. Nous avons donc fait donc fait un diagramme de type camembert pour visualiser le pourcentage de chaque crypto-monnaie. On remarque donc que le bitcoin occupe plus de la moitié des parts du marché, l'ethereum arrive en deuxième place avec 26% et le ripple en troisième place.
 
 ```{r part_crypto_market, echo=FALSE, message=FALSE, warning=FALSE}
 getLastMarketCap<-function(tab){
@@ -500,8 +500,11 @@ text_pie(pourcentages,c(pourcentage_affichage[1],pourcentage_affichage[2],pource
 legend(x="bottomright", legend=c("bitcoin","dash","ethereum","litecoin","monero","nem","ripple"), cex=1.2,fill=c("#FF0101","#4401FF","#01BBFF","#01FF4D","#F7FF01","#EE01FF","#FF9101"))
 ```
 
+> Hypothèse : <span style="color:green">Le cours du bitcoin a une influence sur les autres cours de crypto-monnaies
+</span>
+
 ### Cours de toutes les cryptos
-Dans cette partie nous avons voulu prouver que les autres crypto-monnaies que le bitcoin suivait les varaitions de ce dernier. Les fichiers csv comprenant chacun une monnaie, nous ont beaucoup aidé pour la vérification de cette hypothèse. Pour prouver notre hypothese, nous avons fait le choix de présenter les courbes de 7 crypto-monnaies sur les années 2016, 2017 et début 2018 (ce choix a été fait par rapport au données que l'on disposait). Les 7 crypto-monnaies choisis sont : bitcoin, dash, ethereum, litecoin, monero, nem, ripple.
+Dans cette partie nous avons voulu prouver que les autres crypto-monnaies que le bitcoin suivait les variations de ce dernier. Les fichiers csv comprenant chacun une monnaie, nous ont beaucoup aidé pour la vérification de cette hypothèse. Pour prouver notre hypothese, nous avons fait le choix de présenter les courbes de 7 crypto-monnaies sur les années 2016, 2017 et début 2018 (ce choix a été fait par rapport au données que l'on disposait). Les 7 crypto-monnaies choisis sont : bitcoin, dash, ethereum, litecoin, monero, nem, ripple.
 
 Dans ce graphique nous remarquons que les crypto-monnaies suivent environ les mêmes variations que le bitcoin avec moins d'amplitude. En effet à partir de mi-2017 jusqu'à début 2018 les mêmes baisses et mêmes hausses sont à observer dans toutes ces crypto-monnaies. Le cours du bitcoin a donc une influence sur le cours des autres monnaies.
 
@@ -522,8 +525,6 @@ ggplot(
 geom_line()
 ```
 
-
-> Hypothèse : <span style="color:green">txt</span>
 
 ### Tests de corrélations
 
@@ -591,12 +592,12 @@ corrplot(corrO, title="Matrice de corrélation des valeurs Open", mar=c(0,0,1,0)
 corrplot(corrC, title="Matrice de corrélation des valeurs Close", mar=c(0,0,1,0), type="lower")
 ```
 
-Les deux matrices du dessus exprime la corrélation entre les valeurs Open et Close des crypto-monnaies, elles montrent une forte correlation entre beaucoup de crypto-monnaies, en effet un rond bleu foncé indique que la correlation entre les deux valeurs de deux monnaies se rapproche de 1, c'est à dire que les variations du cours des crypto-monnaies sont pratiquement les mêmes et interviennent en même temps.
+Les deux matrices du dessus exprime la corrélation entre les valeurs Open et Close des crypto-monnaies, elles montrent une forte corrélation entre beaucoup de crypto-monnaies, en effet un rond bleu foncé indique que la corrélation entre les deux valeurs de deux monnaies se rapproche de 1, c'est à dire que les variations du cours des crypto-monnaies sont pratiquement les mêmes et interviennent en même temps.
 
 ```{r echo=TRUE, message=FALSE, warning=FALSE}
 #Corrélogramme : visualisation de la matrice de corrélation des Market.Cap
 corrplot(corrM, title="Matrice de corrélation des valeurs Market.Cap", mar=c(0,0,1,0), type="lower")
 ```
 
-La troisième matrice exprime la crorrélation entre les différentes crypto-monnaies sur la valeur MarketCap qui est la capitalisation boursière d'une monnaie. Si le rond est bleu entre deux monnaies, cela veut dire que lorsque la valeur total du marché d'une des deux monnaies augmente alors l'autre augmente aussi. Par contre fait tres interressant, quand la corrélation est négative entre deux monnaies, cela veut dire que si la valeur total du marché d'une des deux monnaies augmente l'autre diminue. Ce phénomène peut etre expliquer par l'échange entre ces deux monnaies. Dans la matrice ci-dessus, prenons l'exemple de l'ethereum classic et du bitcoin, la corrélation entre ces deux monnaies est négative, on peut en déduire qu'un fort echange c'est fait entre ces deux monnaies ce qui aurrait procoqué la diminution du total d'une et l'augmentation de l'autre.
+La troisième matrice exprime la crorrélation entre les différentes crypto-monnaies sur la valeur MarketCap qui est la capitalisation boursière d'une monnaie. Si le rond est bleu entre deux monnaies, cela veut dire que lorsque la valeur total du marché d'une des deux monnaies augmente alors l'autre augmente aussi. Par contre fait tres intéressant, quand la corrélation est négative entre deux monnaies, cela veut dire que si la valeur total du marché d'une des deux monnaies augmente l'autre diminue. Ce phénomène peut etre expliquer par l'échange entre ces deux monnaies. Dans la matrice ci-dessus, prenons l'exemple de l'ethereum classic et du bitcoin, la corrélation entre ces deux monnaies est négative, on peut en déduire qu'un fort echange c'est fait entre ces deux monnaies ce qui aurait provoqué la diminution du total d'une et l'augmentation de l'autre.
 
