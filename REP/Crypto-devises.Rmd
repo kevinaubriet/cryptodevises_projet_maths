@@ -421,7 +421,16 @@ for(i in 1:12){
 }
 
 library(knitr)
-kable(tabMoyHigh2017, caption = "test")
+moy2017Tab <- c("", "", "", "", "", "", "", "", "", "", "", moyBtcMax2017)
+
+df <- data.frame(Mois = c("Janvier", "Fevrier", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", 
+                          "Septembre", "Octobre", "Novembre", "Décembre"),
+                 Moyenne = tabMoyHigh2017,
+                 Variance = tabVarHigh2017,
+                 EcartType = tabEcartHigh2017,
+                 MoyenneAnnee = moy2017Tab)
+
+kable(df, caption = "Moyennes, Variances & Écart-types du cours minimum sur l'année 2017")
 ```
 
 
