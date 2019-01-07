@@ -207,7 +207,7 @@ for(j in 1:nrow(variationBtc)){
   variationBtc$Variation[j] <- as.numeric(getVariation(variationBtc$`Variation 24h`[j]))
 }
 
-##on ne conserve que les données datant au minimum de 2015
+##on ne conserve que les données datant au minimum de 2015 
 variationBtc_sorted <- variationBtc[variationBtc$Year >= 2016,]
 variationBtc_sorted<- variationBtc_sorted[,-2]
 variationBtc_sorted<- variationBtc_sorted[,-2]
@@ -263,6 +263,7 @@ ggplot(
 
 
 ### Variations du cours du Bitcoin en 2016 et 2017
+Pour renforcer notre hypothèse nous avons tenu à verifier par d'autres données nos propos. Pour cela nous sommes aller chercher un jeu de données qui correspondait aux variations du bitcoin d'un jour à l'autre. Nous avons donc trouver un fichier csv qui nous exprime en pourcentage la variation du bitcoin d'un jour à un autre.
 ```{r variations_btc, message=FALSE, warning=FALSE, include=FALSE}
 variationBtc_sorted_2016 <- variationBtc_sorted[variationBtc_sorted$Year == 2016,]
 variationBtc_sorted_2016 <- variationBtc_sorted_2016[-60,]
@@ -270,7 +271,7 @@ variationBtc_sorted_2016 <- variationBtc_sorted_2016[-60,]
 variationBtc_sorted_2017 <- variationBtc_sorted[variationBtc_sorted$Year == 2017,]
 ```
 
-
+Nous pouvons voir que ce graphique vient appuyer notre hypothèse puisque mi-janvier comme remarqué sur la précédante courbe, le courbe chute ce qui se traduit par une variation négative en pourcentage du bitcoin, cette diminution du cours s'observe sur les deux années au même moment.
 ```{r plot_variations_btc, echo=TRUE, message=FALSE, warning=FALSE}
 ## Création d'un nouveau data frame
 ## Plus exploitable
@@ -427,7 +428,9 @@ kable(df, caption = "Moyennes, Variances & Écart-types du cours minimum sur l'a
 
 
 ### Cours de toutes les cryptos
+Dans cette partie nous avons voulu prouver que les autres crypto-monnaies que le bitcoin suivait les varaitions de ce dernier. Les fichiers csv comprenant chacun une monnaie, nous ont beaucoup aidé pour la vérification de cette hypothèse. Pour prouver notre hypothese, nous avons fait le choix de présenter les courbes de 7 crypto-monnaies sur les années 2016, 2017 et début 2018 (ce choix a été fait par rapport au données que l'on disposait). Les 7 crypto-monnaies choisis sont : bitcoin, dash, ethereum, litecoin, monero, nem, ripple.
 
+Dans ce graphique nous remarquons que
 ```{r all_crypto, echo=FALSE, message=FALSE, warning=FALSE}
 getData2016 <-function(tab){
   tab$Year <- as.factor(tab$Year)
