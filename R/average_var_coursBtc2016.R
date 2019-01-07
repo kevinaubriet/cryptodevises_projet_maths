@@ -43,7 +43,3 @@ for(i in 1:12){
   tabEcartHigh2016[i] <- sqrt(tabVarHigh2016[i])
   tabEcartVol2016[i] <- sqrt(tabVarVol2016[i])
 }
-
-
-
-
