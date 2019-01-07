@@ -1,4 +1,4 @@
-#source("./R/correlation.R")
+source("./R/correlation.R")
 
 #Corrélogramme : visualisation de la matrice de corrélation des open
 corrplot(corrO, type="lower",title = "Open")

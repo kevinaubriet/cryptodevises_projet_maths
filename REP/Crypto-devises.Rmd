@@ -370,6 +370,7 @@ kable(df, caption = "Moyennes, Variances & Écart-types du cours minimum sur l'a
 ```
 
 Cependant, l'écart-type de chaque mois en 2017 est beaucoup plus élevé. Pour deux périodes équivalentes (Janvier 2016 & Janvier 2017) il est plus de 3 fois plus grand : c'est pourquoi il y a beaucoup de variations et l'augmentation de la moyenne est exponentielle. En effet, elle débute en janvier 2017 à 937.450 et termine en décembre à 16051.632.
+
 ```{r average_var_2017, echo=FALSE, message=FALSE, warning=FALSE}
 ##2017
 bitcoin_price_sorted_2017 <- bitcoin_price_sorted[bitcoin_price_sorted$Year == 2017,]
@@ -449,7 +450,8 @@ ripple_price_sorted_all <- getData2016(ripple_price_sorted)
 
 
 ### Part de marché par crypto-monnaies
-Le bitcoin est sans doute la crypto-monnaie qui a son marketcap le plus, haut autrement dit qui la capitalisation boursière la plus élevée. Nous avons donc fait donc fait un diagramme de type camembert pour visualiser le pourcentage de chaque crypto-monaie. On remarque donc que le bitcoin occupe plus de la moitié des parts du marché, l'ethereum arrive en deuxième place avec 26% et le ripple en troisième place.
+Le bitcoin est sans doute la crypto-monnaie qui a son marketcap le plus, haut autrement dit qui la capitalisation boursière (La capitalisation boursière correspond au prix qu'il faudrait payer s'il était possible de racheter toutes les actions) la plus élevée. Nous avons donc fait donc fait un diagramme de type camembert pour visualiser le pourcentage de chaque crypto-monaie. On remarque donc que le bitcoin occupe plus de la moitié des parts du marché, l'ethereum arrive en deuxième place avec 26% et le ripple en troisième place.
+
 ```{r part_crypto_market, echo=FALSE, message=FALSE, warning=FALSE}
 getLastMarketCap<-function(tab){
   tab$Year <- as.factor(tab$Year)
@@ -503,7 +505,7 @@ Dans cette partie nous avons voulu prouver que les autres crypto-monnaies que le
 
 Dans ce graphique nous remarquons que les crypto-monnaies suivent environ les mêmes variations que le bitcoin avec moins d'amplitude. En effet à partir de mi-2017 jusqu'à début 2018 les mêmes baisses et mêmes hausses sont à observer dans toutes ces crypto-monnaies. Le cours du bitcoin a donc une influence sur le cours des autres monnaies.
 
-```{r}
+```{r message=FALSE, warning=FALSE, include=FALSE}
 resultats <- data.frame(bitcoin= bitcoin_price_sorted_all$Close, dash=dash_price_sorted_all$Close, etherum=ethereum_price_sorted_all$Close,litecoin= litecoin_price_sorted_all$Close, monero=monero_price_sorted_all$Close, nem=nem_price_sorted_all$Close,ripple=ripple_price_sorted_all$Close, Moi=bitcoin_price_sorted_all$Month ,Jour=bitcoin_price_sorted_all$DateFormat)
 
 prediction2 <- gather(
@@ -529,6 +531,7 @@ Nous cherchons à vérifier l’intensité de la liaison qui peut exister entre 
 Pour pouvoir effectuer le test de corrélation, nous avons dû, tout d’abord, récupérer les données pour les open, close et market de chaque crypto-monnaie. Ces données ont été récupérées par l’intermédiaire de notre script et enregistrées par la suite dans des csv correspondants.
 Après avoir regroupé nos fichiers csv, nous avons filtré les données selon le paramètre souhaité (open, close ou market cap). Notre étude s’effectue du 23/07/2017 au 20/02/2018. 
 Pour cela, nous avons calculé le niveau de corrélation entre chaque paire de graphiques possibles. C’est ce que fait la fonction ci-dessous.
+
 ```{r calcul_matrice_corr, echo=TRUE, message=FALSE, warning=FALSE}
 
 #calcule de la matrice de corrélation
@@ -582,12 +585,18 @@ Nous constatons que dash, monero, qtum et waves sont les crypto-devises les plus
 ```{r plot_corr, echo=TRUE, message=FALSE, warning=FALSE}
 #Corrélogramme : visualisation de la matrice de corrélation des Open
 corrplot(corrO, title="Matrice de corrélation des valeurs Open", mar=c(0,0,1,0), type="lower")
-
+```
+```{r echo=TRUE, message=FALSE, warning=FALSE}
 #Corrélogramme : visualisation de la matrice de corrélation des Close
 corrplot(corrC, title="Matrice de corrélation des valeurs Close", mar=c(0,0,1,0), type="lower")
+```
 
+Les deux matrices du dessus exprime la corrélation entre les valeurs Open et Close des crypto-monnaies, elles montrent une forte correlation entre beaucoup de crypto-monnaies, en effet un rond bleu foncé indique que la correlation entre les deux valeurs de deux monnaies se rapproche de 1, c'est à dire que les variations du cours des crypto-monnaies sont pratiquement les mêmes et interviennent en même temps.
+
+```{r echo=TRUE, message=FALSE, warning=FALSE}
 #Corrélogramme : visualisation de la matrice de corrélation des Market.Cap
 corrplot(corrM, title="Matrice de corrélation des valeurs Market.Cap", mar=c(0,0,1,0), type="lower")
 ```
 
+La troisième matrice exprime la crorrélation entre les différentes crypto-monnaies sur la valeur MarketCap qui est la capitalisation boursière d'une monnaie. Si le rond est bleu entre deux monnaies, cela veut dire que lorsque la valeur total du marché d'une des deux monnaies augmente alors l'autre augmente aussi. Par contre fait tres interressant, quand la corrélation est négative entre deux monnaies, cela veut dire que si la valeur total du marché d'une des deux monnaies augmente l'autre diminue. Ce phénomène peut etre expliquer par l'échange entre ces deux monnaies. Dans la matrice ci-dessus, prenons l'exemple de l'ethereum classic et du bitcoin, la corrélation entre ces deux monnaies est négative, on peut en déduire qu'un fort echange c'est fait entre ces deux monnaies ce qui aurrait procoqué la diminution du total d'une et l'augmentation de l'autre.
 
