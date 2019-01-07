@@ -229,6 +229,7 @@ bitcoin_price_sorted2017 <-bitcoin_price_sorted[bitcoin_price_sorted$Year == 201
 
 
 ```
+
 Nous remarquons dans la courbe générée que le cours du bitcoin est en augmentation constante de 2015 jusqu'en 2017. Le cours du bitcoin subit durant l'année 2017 une évolution exponentielle, le prix d'un bitcoin frole les 20 000 \$, apres ce pic, son cours chute durant l'année pour osciller autour des 10 000 \$.
 ```{r plot_evolution_cours_btc_uniqueLine, echo=TRUE, message=FALSE, warning=FALSE}
 ggplot(bitcoin_price_sorted, aes(x=as.Date(DateFormat), y=Open, color=Year, group=Year)) +
@@ -237,6 +238,10 @@ ggplot(bitcoin_price_sorted, aes(x=as.Date(DateFormat), y=Open, color=Year, grou
   scale_x_date(name="Months", labels = date_format("%b"), breaks = "3 month")+
   geom_line(aes(colour=Year), size=1)
 ```
+
+Afin d'y voir plus clair et de poser une hypothèse sur les variations du cours du bitcoin, nous avons fait le choix de diviser cette courbe en trois courbes representant chaque année. Nous pourrons donc analyser les variations du bitcoin en fonction de la période de l'année et donc comparer le cours des différentes années en fonction des mois car elles seront superposées.
+En analysant cette courbe nous remarquons que les années de 2015 et 2016 du bitcoin subissent les même variations tandis que celle de 2017 en a des beaucoups plus marqués.
+Si l'on regarde bien les variations, on remarque que milieu janvier le court du bitcoin subit une légère baisse de sa valeur peu importe l'année, ce phénomène se produit aussi durant le mois d'août pour toutes les années. Début novembre, une augmenation soudaine du cours est à déplorer pour les années 2015 et 2016. Ses petits pics de variations montre bien que certaine période de l'année sont plus propices à la baisse ou à la hausse de la valeur du bitcoin, la période de l'année influe donc bien le cours du bitcoin
 
 Afin d'y voir plus clair et de poser une hypothèse sur les variations du cours du bitcoin, nous avons fait le choix de diviser cette courbe en trois courbes representant chaque année. Nous pourrons donc analyser les variations du bitcoin en fonction de la période de l'année et donc comparer le cours des différentes années en fonction des mois car elles seront superposées.
 En analysant cette courbe nous remarquons que les années de 2015 et 2016 du bitcoin subissent les mêmes variations tandis que celle de 2017 en a des beaucoups plus marqués.
@@ -298,10 +303,77 @@ ggplot(
   geom_line()
 ```
 
-> Hypothèse : <span style="color:green">txt</span>
+> Hypothèse : <span style="color:green">On n’obtiendra pas les mêmes résultats finaux si l’on considère une fenêtre de temps plus grande pour calculer les moyennes.</span>
 
 ### Moyennes et variances
-```{r average_var_2017, echo=TRUE, message=FALSE, warning=FALSE}
+
+L'objectif de cette partie est tout d'abord de calculer l'ensemble des moyennes et des variances sur les années 2015, 2016 et 2017. Pour alléger, nous ne montrerons que les tableaux de 2016 et 2017.
+À l'aide de ces résultats, nous voulons démontrer qu'on n'obtiendra pas les mêmes résultats finaux si l'on considère une fenêtre de temps plus grande pour calculer les moyennes.
+
+Sur l'année 2016, nous pouvons remarquer qu'il n'y a pas beaucoup de variations suivant les mois, il y a une hausse linéaire sur toute l'année. On constate en toute logique, pour appuyer cette affirmation, que l'écart-type de chaque mois est plutôt peu élevé. 
+```{r average_var_2016, echo=FALSE, message=FALSE, warning=FALSE, message=FALSE}
+##2016
+bitcoin_price_sorted_2016 <- bitcoin_price_sorted[bitcoin_price_sorted$Year == 2016,]
+
+##moyenne de 2016
+moyBtcMin2016 <- mean(bitcoin_price_sorted_2016$Low)
+moyBtcMax2016 <- mean(bitcoin_price_sorted_2016$High)
+moyBtcVol2016 <-mean(bitcoin_price_sorted_2016$Volume)
+
+##variance de 2016
+varBtcMin2016 <- var(bitcoin_price_sorted_2016$Low)
+varBtcMax2016 <- var(bitcoin_price_sorted_2016$High)
+varBtcVol2016 <- var(bitcoin_price_sorted_2016$Volume)
+
+##ecrat type de 2016
+ecartBtcMin2016 <- sqrt(varBtcMin2016)
+ecartBtcMax2016 <- sqrt(varBtcMax2016)
+ecartBtcVol2016 <- sqrt(varBtcVol2016)
+
+tabMoyLow2016<-0
+tabMoyHigh2016<-0
+tabMoyVol2016<-0
+tabVarLow2016<-0
+tabVarHigh2016<-0
+tabVarVol2016<-0
+tabEcartLow2016<-0
+tabEcartHigh2016<-0
+tabEcartVol2016<-0
+
+##boucle permettant de remplir les tableaux de mois
+for(i in 1:12){
+  ##moyenne pour chaque mois
+  tabMoyLow2016[i]<- mean(bitcoin_price_sorted_2016[bitcoin_price_sorted_2016$Month == i,]$Low)
+  tabMoyHigh2016[i]<- mean(bitcoin_price_sorted_2016[bitcoin_price_sorted_2016$Month == i,]$High)
+  tabMoyVol2016[i]<- mean(bitcoin_price_sorted_2016[bitcoin_price_sorted_2016$Month == i,]$Volume)
+  
+  ##variance pour chaque mois
+  tabVarLow2016[i]<- var(bitcoin_price_sorted_2016[bitcoin_price_sorted_2016$Month == i,]$Low)
+  tabVarHigh2016[i]<- var(bitcoin_price_sorted_2016[bitcoin_price_sorted_2016$Month == i,]$High)
+  tabVarVol2016[i]<- var(bitcoin_price_sorted_2016[bitcoin_price_sorted_2016$Month == i,]$Volume)
+
+  ##ecart type pour chaque mois
+  tabEcartLow2016[i] <- sqrt(tabVarLow2016[i])
+  tabEcartHigh2016[i] <- sqrt(tabVarHigh2016[i])
+  tabEcartVol2016[i] <- sqrt(tabVarVol2016[i])
+}
+
+library(knitr)
+
+moy2016Tab <- c("", "", "", "", "", "", "", "", "", "", "", moyBtcMax2016)
+
+df <- data.frame(Mois = c("Janvier", "Fevrier", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", 
+                          "Septembre", "Octobre", "Novembre", "Décembre"),
+                 Moyenne = tabMoyHigh2016,
+                 Variance = tabVarHigh2016,
+                 EcartType = tabEcartHigh2016,
+                 MoyenneAnnee = moy2016Tab)
+
+kable(df, caption = "Moyennes, Variances & Écart-types du cours minimum sur l'année 2016")
+```
+
+Cependant, l'écart-type de chaque mois en 2017 est beaucoup plus élevé. Pour deux périodes équivalentes (Janvier 2016 & Janvier 2017) il est plus de 3 fois plus grand : c'est pourquoi il y a beaucoup de variations et l'augmentation de la moyenne est exponentielle. En effet, elle débute en janvier 2017 à 937.450 et termine en décembre à 16051.632.
+```{r average_var_2017, echo=FALSE, message=FALSE, warning=FALSE}
 ##2017
 bitcoin_price_sorted_2017 <- bitcoin_price_sorted[bitcoin_price_sorted$Year == 2017,]
 
