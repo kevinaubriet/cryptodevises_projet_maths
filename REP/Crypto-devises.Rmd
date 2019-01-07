@@ -217,7 +217,7 @@ variationBtc_sorted<- variationBtc_sorted[,-2]
 > Hypothèse : <span style="color:green">L'évolution du cours du Bitcoin dépend de la période de l'année.</span>
 
 ### Évolution du cours du bitcoin de 2015 à 2017
-
+Tout d'abord nous avons voulu tracer la courbe de l'évolution du cours du bitcoin sur plusieurs années pour avoir une vue d'ensemble de l'augemnetation de valeur de cette cryptomonnaie.Pour cela, nous avons en premier lieu eu à trier le tableaux dans l'ordre croissant des années afin d'avoir une courbe cohérente. 
 ```{r evolution_cours_btc_formatDatas, message=FALSE, warning=FALSE, include=FALSE}
 bitcoin_price_sorted$Year <- as.factor(bitcoin_price_sorted$Year)
 
@@ -227,9 +227,9 @@ bitcoin_price_sorted2016 <- bitcoin_price_sorted2016[-60,] # On supprime la 60em
 bitcoin_price_sorted2015 <-bitcoin_price_sorted[bitcoin_price_sorted$Year == 2015,]
 bitcoin_price_sorted2017 <-bitcoin_price_sorted[bitcoin_price_sorted$Year == 2017,]
 
-resultats <- data.frame(Val2015= bitcoin_price_sorted2015$Close, Val2016=bitcoin_price_sorted2016$Close, Val2017=bitcoin_price_sorted2017$Close, Moi=bitcoin_price_sorted2015$Month ,Jour=bitcoin_price_sorted2015$DateFormat)
-```
 
+```
+Nous remarquons dans la courbe générée que le cours du bitcoin est en augmentation constante de 2015 jusqu'en 2017. Le cours du bitcoin subit durant l'année 2017 une évolution exponentielle, le prix d'un bitcoin frole les 20 000 \$, apres ce pic, son cours chute durant l'année pour osciller autour des 10 000 \$.
 ```{r plot_evolution_cours_btc_uniqueLine, echo=TRUE, message=FALSE, warning=FALSE}
 ggplot(bitcoin_price_sorted, aes(x=as.Date(DateFormat), y=Open, color=Year, group=Year)) +
   ggtitle("Évolution du cours du Bitcoin (courbe unique)")+
@@ -237,9 +237,12 @@ ggplot(bitcoin_price_sorted, aes(x=as.Date(DateFormat), y=Open, color=Year, grou
   scale_x_date(name="Months", labels = date_format("%b"), breaks = "3 month")+
   geom_line(aes(colour=Year), size=1)
 ```
-
+Afin d'y voir plus clair et de poser une hypothèse sur les variations du cours du bitcoin, nous avons fait le choix de diviser cette courbe en trois courbes representant chaque année. Nous pourrons donc analyser les variations du bitcoin en fonction de la période de l'année et donc comparer le cours des différentes années en fonction des mois car elles seront superposées.
+En analysant cette courbe nous remarquons que les années de 2015 et 2016 du bitcoin subissent les même variations tandis que celle de 2017 en a des beaucoups plus marqués.
+Si l'on regarde bien les variations, on remarque que milieu janvier le court du bitcoin subit une légère baisse de sa valeur peu importe l'année, ce phénomène se produit aussi durant le mois d'août pour toutes les années. Début novembre, une augmenation soudaine du cours est à déplorer pour les années 2015 et 2016. Ses petits pics de variations montre bien que certaine période de l'année sont plus propices à la baisse ou à la hausse de la valeur du bitcoin, la période de l'année influe donc bien le cours du bitcoin
 
 ```{r plot_evolution_cours_btc, echo=TRUE, message=FALSE, warning=FALSE}
+resultats <- data.frame(Val2015= bitcoin_price_sorted2015$Close, Val2016=bitcoin_price_sorted2016$Close, Val2017=bitcoin_price_sorted2017$Close, Moi=bitcoin_price_sorted2015$Month ,Jour=bitcoin_price_sorted2015$DateFormat)
 
 prediction2 <- gather(
   data = resultats,
