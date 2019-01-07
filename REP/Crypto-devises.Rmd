@@ -32,21 +32,29 @@ library(corrplot)
 library(forcats)
 ```
 
-# Présentation du groupe et du rôle de chacun <a name="groupe"></a>
-Notre groupe est composé de 3 membres : Habiba Bouajla, Gabriel Curinga et Kevin Aubriet. Dans un premier temps, nous nous sommes pas répartis les tahes mais avons préférer travailler tous ensemble sur la sélection des données ainsi que le traitment des dataframes pour pourvoir se familiariser avec le language R et s'entraider. Une fois tout le monde à l'aise avec la gestion des données avec R, nous nous sommes répartis les taches comme ceci : Habiba s'est occupée du test de correlation du bitcoin avec les autres crypto-monnaies qui comprent un script de test de correlation ainsi que 3 matrices. Gabriel lui a généré des graphiques du cours du bitcoin (un avec une seule courbe et un autre avec plusieurs courbes pour chaque année), un graphique de variation du bicoin pour voir les différentes hausses ou baisses du bitcoin. Kevin avait comme tahce de réaliser les scripts de calcul du court de bitcoin comprenant le calcul des moyennes,variances et écart type de différentes données, de faire deux graphiques un camembert pour analyser le marketCap du bitcoin par rapport aux autres crypto-monnnaies et un graphique avec plusieurs courbes pour chaque crypto-monnaie.
-Le rapport et le support de présentation orale a été fait par tous les membres de l'équipe.
-# Descriptif sujet et ses finalités
+# Présentation du groupe et du rôle de chacun
+
+Notre groupe est composé de 3 membres : Habiba Bouajla, Gabriel Curinga et Kevin Aubriet. Dans un premier temps, nous ne nous sommes pas répartis les tâches mais avons préféré travailler tous ensemble sur la sélection des données ainsi que le traitement des dataframes pour pourvoir se familiariser avec le language R et s'entraider. Une fois tout le monde à l'aise avec la gestion des données avec R, nous nous sommes répartis les tâches de cette manière :
+
+* Habiba s'est occupée du test de correlation du Bitcoin avec les autres crypto-monnaies qui comprend un script de test de correlation ainsi que 3 matrices. 
+* Gabriel, lui, a généré des graphiques du cours du Bitcoin (un avec une seule courbe et un autre avec plusieurs courbes pour chaque année), un graphique de variation du Bitcoin pour voir les différentes hausses ou baisses du bitcoin. 
+* Kevin devait réaliser les scripts de calcul du cours du Bitcoin comprenant le calcul des moyennes, variances et écarts-types de différentes données, de faire deux graphiques : un diagramme circulaire pour analyser le marketCap du Bitcoin par rapport aux autres crypto-monnnaies et un graphique avec plusieurs courbes pour chaque crypto-monnaie.
+
+Le rapport et le support de présentation orale ont été faits par tous les membres de l'équipe.
+
+# Descriptif du sujet et de ses finalités
 
 Depuis plusieurs années, le phénomène de la crypto-monnaie prend de plus en plus de place dans nos mondes bancaires et financiers. Il s’agit d’une monnaie virtuelle et cryptée, c’est-à-dire qu’elle n’est utilisable que par une personne possédant le code permettant de décrypter la monnaie.
 Comparées aux monnaies ordinaires, les cryptomonnaies sont gérées par un grand livre de comptes ouvert et consultable par tous (la blockchain) qui répertorie l'ensemble des transactions depuis l'origine. Ainsi, nous voudrons faire quelques considérations en exploitant les données qui nous sont mises à disposition par la blockchain.
 
 L’objectif de notre projet est d’utiliser les données des cours des crypto-devises de 2015, 2016 et 2017. Cela a pour but de calculer la moyenne et la variance d’un certain nombre de variables comme le cours du Bitcoin, la valeur des transactions et la part de marché par crypto-monnaies. Nous avons également effectué un test de corrélation pour vérifier si les autres crypto-devises sont ou pas corrélées au Bitcoin.
 
-# Présentation du groupe et du rôle de chacun
-
 # Méthodologie suivie pour répondre aux questions
 
 Pour mener à bien notre projet et répondre le plus précisement possible aux objectifs, nous avons tout d'abord rechercher les données relatives aux crypto-monnaies les mieux adaptées. La qualité des données récoltées est primordiale dans un tel exercice où nous souhaitons effectuer des vérifications d'hypothèses et des tests de corrélations.
+
+### Environnement de travail
+
 C'est alors que le groupe a démarré un projet dans le langage R dans lequel nous avons mis en place un environnement de travail qui suit l'architecture suivante : 
 
 * PRE = scripts d'imports et de traitements des données
@@ -57,9 +65,26 @@ C'est alors que le groupe a démarré un projet dans le langage R dans lequel no
 
 Tout ce projet se trouve sur un [git]("https://github.com/kevinaubriet/cryptodevises_projet_maths.git") (hebergé sur GitHub) pour faciliter le travail en groupe évidemment.
 
+### Traitements de données et graphiques
+
 Une fois que l'environnement a été mis en place, nous avons effectué tous les traitements de données/tableaux pour en tirer uniquement les choses utiles.
 
+La première chose que nous avons fait est de poser l'hypothèse ue la baisse ou la hausse du cours du Bitcoin était favorisée durant différentes périodes sur ces 3 dernières années. C'est alors que nous avons réalisé deux graphiques sur l'évolution du cours Bitcoin de 2015 à 2018 : l'un croisant les courbes des différentes années suivant les mois, et l'autre où les données sont présentes sur une même courbe suivant les mois également.
 
+Par la suite, nous avons voulu approfondir la vérification de l'hyothèse en réalisant un graphique des variations du cours du Bitcoin en pourcentage (%) d'un jour sur l'autre pendant l'année 2016 et 2017.
+
+Il nous a été demandé de calculer les moyennes et variances de différentes variables sur les années 2016 et 2017 :
+
+* cours minimal du Bitcoin
+* cours maxiaml du Bitcoin
+* valeur des transactions
+* proportions des transactions en Bitcoin par rapport aux autres crytpo-devises
+
+Nous avons effectivement réalisé ces calculs, cependant nous avons remarqué que les résultats des variances n'ont pas été satisfaisants. C'est pourquoi nous avons décidé de calculer les écart-types de ces variables car l'écart-type est plus parlant ; il correspond à l'échelle de nos données.
+
+En suite, il fallait évaluer les proportions des transactions en Bitcoin par rapport aux autres crypto-devises. Nous avons alors effectué un graphique croisant toutes les courbes relatives aux cours des crypto-monnaies sur les 3 dernières années. Pour aller plus loin, nous avons décidé de réaliser également un diagramme circulaire des parts de marché par crypto-devises en pourcentage (%).
+
+Enfin, nous avons terminé par un test de corrélation comme demandé pour vérifier si les autres crytpo-devises sont ou pas corrélées au Bitcoin. Pour ce faire, nous avons utilisé un "Corrélogramme" qui produit une matrice de corrélation entre toutes les crypto-monnaies. La matrice montre le lien de -1 (corrélation négative) à 1 (corrélation positive), en passant par 0 (pas de corrélation) entre deux monnaies.
 
 # Données utilisées
 
@@ -88,6 +113,7 @@ La récolte de données s'est faite sur des sites plutôt réputés, ou du moins
 Les données que nous avons récupéré ne correspondaient pas parfaitement à un traitement convenable. C'est pourquoi nous avons décidé de les formater.
 
 Nous avons effectué des fonctions de récupération de chaque élément d'une date (jour, mois et année) dans le but de nous faciliter la tâche dans l'exploitation des données et surtout dans la création de graphique.
+
 ```{r sort_date, echo=TRUE, message=FALSE, warning=FALSE}
 ##Extraction de l'année
 getYear <- function(str) {
@@ -188,6 +214,8 @@ variationBtc_sorted<- variationBtc_sorted[,-2]
 
 # Résultats obtenus et visualisation graphique <a name="resultats"></a>
 
+> Hypothèse : <span style="color:green">L'évolution du cours du Bitcoin dépend de la période de l'année.</span>
+
 ### Évolution du cours du bitcoin de 2015 à 2017
 
 ```{r evolution_cours_btc_formatDatas, message=FALSE, warning=FALSE, include=FALSE}
@@ -265,6 +293,8 @@ ggplot(
   scale_x_date(name="Months", labels = date_format("%b"), breaks = "1 month")+
   geom_line()
 ```
+
+> Hypothèse : <span style="color:green">txt</span>
 
 ### Moyennes et variances
 ```{r average_var_2017, echo=TRUE, message=FALSE, warning=FALSE}
@@ -404,9 +434,14 @@ legend(x="bottomright", legend=c("bitcoin","dash","ethereum","litecoin","monero"
 ```
 
 
+> Hypothèse : <span style="color:green">txt</span>
+
 ### Tests de corrélations
 
-FONCTION CORRELATION TABLE
+Nous cherchons à vérifier l’intensité de la liaison qui peut exister entre les crypto-devises. Pour cela, nous avons effectué un test de corrélation pour vérifier si les autres crypto-devises ou pas corrélées au Bitcoin.
+Pour pouvoir effectuer le test de corrélation, nous avons dû, tout d’abord, récupérer les données pour les open, close et market de chaque crypto-monnaie. Ces données ont été récupérées par l’intermédiaire de notre script et enregistrées par la suite dans des csv correspondants.
+Après avoir regroupé nos fichiers csv, nous avons filtré les données selon le paramètre souhaité (open, close ou market cap). Notre étude s’effectue du 23/07/2017 au 20/02/2018. 
+Pour cela, nous avons calculé le niveau de corrélation entre chaque paire de graphiques possibles. C’est ce que fait la fonction ci-dessous.
 ```{r calcul_matrice_corr, echo=TRUE, message=FALSE, warning=FALSE}
 
 #calcule de la matrice de corrélation
@@ -455,7 +490,8 @@ rownames(corrM) <- c("bitcoin_cash", "bitcoin", "bitconnect", "dash", "ethereum_
                     "litecoin", "nem", "monero", "numeraire", "omisego", "neo", "ripple", "stratis", "qtum", "waves")
 ```
 
-CORRELOGRAMMES
+De plus, nous avons utilisé le package **corrplot** pour afficher la matrice de corrélation. Nous pouvons voir que la matrice atteint son maximum à 1 quand les deux séries sont similaires. 
+Nous constatons que dash, monero, qtum et waves sont les crypto-devises les plus corrélées au bitcoin.
 ```{r plot_corr, echo=TRUE, message=FALSE, warning=FALSE}
 #Corrélogramme : visualisation de la matrice de corrélation des Open
 corrplot(corrO, title="Matrice de corrélation des valeurs Open", mar=c(0,0,1,0), type="lower")
