@@ -452,7 +452,7 @@ ripple_price_sorted_all <- getData2016(ripple_price_sorted)
 
 
 ### Part de marché par crypto-monnaies
-
+Le bitcoin est sans doute la crypto-monnaie qui a son marketcap le plus, haut autrement dit qui la capitalisation boursière la plus élevée. Nous avons donc fait donc fait un diagramme de type camembert pour visualiser le pourcentage de chaque crypto-monaie. On remarque donc que le bitcoin occupe plus de la moitié des parts du marché, l'ethereum arrive en deuxième place avec 26% et le ripple en troisième place.
 ```{r part_crypto_market, echo=FALSE, message=FALSE, warning=FALSE}
 getLastMarketCap<-function(tab){
   tab$Year <- as.factor(tab$Year)
@@ -496,7 +496,7 @@ text_pie = function(vector,labels=c(),cex=1) {
 }
 pourcentage_affichage <- round(pourcentages,2)
 # Ajouter les étiquettes
-text_pie(pourcentages,c(pourcentage_affichage[1],pourcentage_affichage[2],pourcentage_affichage[3],pourcentage_affichage[4], "", "" ,pourcentage_affichage[6]),cex=1.1) # Ces valeurs en % sont à remplacer manuellement
+text_pie(pourcentages,c(pourcentage_affichage[1],pourcentage_affichage[2],pourcentage_affichage[3],pourcentage_affichage[4], "", "" ,pourcentage_affichage[7]),cex=1.1) # Ces valeurs en % sont à remplacer manuellement
 
 legend(x="bottomright", legend=c("bitcoin","dash","ethereum","litecoin","monero","nem","ripple"), cex=1.2,fill=c("#FF0101","#4401FF","#01BBFF","#01FF4D","#F7FF01","#EE01FF","#FF9101"))
 ```
@@ -504,7 +504,7 @@ legend(x="bottomright", legend=c("bitcoin","dash","ethereum","litecoin","monero"
 ### Cours de toutes les cryptos
 Dans cette partie nous avons voulu prouver que les autres crypto-monnaies que le bitcoin suivait les varaitions de ce dernier. Les fichiers csv comprenant chacun une monnaie, nous ont beaucoup aidé pour la vérification de cette hypothèse. Pour prouver notre hypothese, nous avons fait le choix de présenter les courbes de 7 crypto-monnaies sur les années 2016, 2017 et début 2018 (ce choix a été fait par rapport au données que l'on disposait). Les 7 crypto-monnaies choisis sont : bitcoin, dash, ethereum, litecoin, monero, nem, ripple.
 
-Dans ce graphique nous remarquons que les crypto-monnaies suivent environ les mêmes variations que le bitcoin avec moins d'amplitude. En effet à partir de mi-2017 jusqu'à début 2018 les mêmes baisses et mêmes hausses sont à observer dans toutes ces crypto-monnaies.
+Dans ce graphique nous remarquons que les crypto-monnaies suivent environ les mêmes variations que le bitcoin avec moins d'amplitude. En effet à partir de mi-2017 jusqu'à début 2018 les mêmes baisses et mêmes hausses sont à observer dans toutes ces crypto-monnaies. Le cours du bitcoin a donc une influence sur le cours des autres monnaies.
 
 ```{r}
 resultats <- data.frame(bitcoin= bitcoin_price_sorted_all$Close, dash=dash_price_sorted_all$Close, etherum=ethereum_price_sorted_all$Close,litecoin= litecoin_price_sorted_all$Close, monero=monero_price_sorted_all$Close, nem=nem_price_sorted_all$Close,ripple=ripple_price_sorted_all$Close, Moi=bitcoin_price_sorted_all$Month ,Jour=bitcoin_price_sorted_all$DateFormat)
