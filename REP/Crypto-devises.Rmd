@@ -69,7 +69,7 @@ Tout ce projet se trouve sur un [git]("https://github.com/kevinaubriet/cryptodev
 
 Une fois que l'environnement a été mis en place, nous avons effectué tous les traitements de données/tableaux pour en tirer uniquement les choses utiles.
 
-La première chose que nous avons fait est de poser l'hypothèse ue la baisse ou la hausse du cours du Bitcoin était favorisée durant différentes périodes sur ces 3 dernières années. C'est alors que nous avons réalisé deux graphiques sur l'évolution du cours Bitcoin de 2015 à 2018 : l'un croisant les courbes des différentes années suivant les mois, et l'autre où les données sont présentes sur une même courbe suivant les mois également.
+La première chose que nous avons fait est de poser l'hypothèse ue la baisse ou la hausse du cours du Bitcoin était favorisée durant différentes périodes sur ces 3 dernières années. C'est alors que nous avons réalisé deux graphiques sur l'évolution du cours Bitcoin de 2015 à 2018 : l'un croisant les courbes des différentes années suivant les mois, et l'autre où les données sont présentes sur une mêmes courbe suivant les mois également.
 
 Par la suite, nous avons voulu approfondir la vérification de l'hyothèse en réalisant un graphique des variations du cours du Bitcoin en pourcentage (%) d'un jour sur l'autre pendant l'année 2016 et 2017.
 
@@ -143,8 +143,7 @@ getVariation <- function(str){
 }
 ```
 
-La fonction getData prend en paramètre la source d'un fichier csv. En effet, nous avons récupéré un groupe de fichier csv (comprenant chacun les données d'une crypto-monnaie) qui disposait de la même structure, nous avons donc fait une fonction pour pouvoir les traiter. La fonction va lire le csv, en suite rajouter 3 colonnes pour faciliter le traitement de la date (les dates du tableau de données étaient inexploitables). Grace à tout cela, nous avons trié notre tableau pour garder que les données concernant les années passées 2015.
-
+La fonction getData prend en parametre la source d'un fichier csv.En effet, nous avons récupérer un groupe de fichier csv (comprenant chacun les données d'une crypto-monnaie) qui disposait de la même structure, nous avons donc fait une fonction pour pouvoir les traiter. La fonction va lire le csv, ensuite rajouter 3 colonnes pour faciliter le traitement de la date (la date du tableaux de données étaient inexploitables). Grace à tout cela, nous avons trier notre tableau pour garder que les données concernant les années passées 2015.
 ```{r sort_, echo=TRUE, message=FALSE, warning=FALSE}
 
 getData2015 <-function(src){
@@ -238,10 +237,10 @@ ggplot(bitcoin_price_sorted, aes(x=as.Date(DateFormat), y=Open, color=Year, grou
   scale_x_date(name="Months", labels = date_format("%b"), breaks = "3 month")+
   geom_line(aes(colour=Year), size=1)
 ```
-Afin d'y voir plus clair et de poser une hypothèse sur les variations du cours du bitcoin, nous avons fait le choix de diviser cette courbe en trois courbes representant chaque année. Nous pourrons donc analyser les variations du bitcoin en fonction de la période de l'année et donc comparer le cours des différentes années en fonction des mois car elles seront superposées.
-En analysant cette courbe nous remarquons que les années de 2015 et 2016 du bitcoin subissent les même variations tandis que celle de 2017 en a des beaucoups plus marqués.
-Si l'on regarde bien les variations, on remarque que milieu janvier le court du bitcoin subit une légère baisse de sa valeur peu importe l'année, ce phénomène se produit aussi durant le mois d'août pour toutes les années. Début novembre, une augmenation soudaine du cours est à déplorer pour les années 2015 et 2016. Ses petits pics de variations montre bien que certaine période de l'année sont plus propices à la baisse ou à la hausse de la valeur du bitcoin, la période de l'année influe donc bien le cours du bitcoin
 
+Afin d'y voir plus clair et de poser une hypothèse sur les variations du cours du bitcoin, nous avons fait le choix de diviser cette courbe en trois courbes representant chaque année. Nous pourrons donc analyser les variations du bitcoin en fonction de la période de l'année et donc comparer le cours des différentes années en fonction des mois car elles seront superposées.
+En analysant cette courbe nous remarquons que les années de 2015 et 2016 du bitcoin subissent les mêmes variations tandis que celle de 2017 en a des beaucoups plus marqués.
+Si l'on regarde bien les variations, on remarque que milieu janvier le court du bitcoin subit une légère baisse de sa valeur peu importe l'année, ce phénomène se produit aussi durant le mois d'août pour toutes les années. Début novembre, une augmenation soudaine du cours est à déplorer pour les années 2015 et 2016. Ses petits pics de variations montre bien que certaine période de l'année sont plus propices à la baisse ou à la hausse de la valeur du bitcoin, la période de l'année influe donc bien le cours du bitcoin.
 ```{r plot_evolution_cours_btc, echo=TRUE, message=FALSE, warning=FALSE}
 resultats <- data.frame(Val2015= bitcoin_price_sorted2015$Close, Val2016=bitcoin_price_sorted2016$Close, Val2017=bitcoin_price_sorted2017$Close, Moi=bitcoin_price_sorted2015$Month ,Jour=bitcoin_price_sorted2015$DateFormat)
 
@@ -302,70 +301,7 @@ ggplot(
 > Hypothèse : <span style="color:green">txt</span>
 
 ### Moyennes et variances
-
-```{r average_var_2016, echo=FALSE, message=FALSE, warning=FALSE, message=FALSE}
-##2016
-bitcoin_price_sorted_2016 <- bitcoin_price_sorted[bitcoin_price_sorted$Year == 2016,]
-
-##moyenne de 2016
-moyBtcMin2016 <- mean(bitcoin_price_sorted_2016$Low)
-moyBtcMax2016 <- mean(bitcoin_price_sorted_2016$High)
-moyBtcVol2016 <-mean(bitcoin_price_sorted_2016$Volume)
-
-##variance de 2016
-varBtcMin2016 <- var(bitcoin_price_sorted_2016$Low)
-varBtcMax2016 <- var(bitcoin_price_sorted_2016$High)
-varBtcVol2016 <- var(bitcoin_price_sorted_2016$Volume)
-
-##ecrat type de 2016
-ecartBtcMin2016 <- sqrt(varBtcMin2016)
-ecartBtcMax2016 <- sqrt(varBtcMax2016)
-ecartBtcVol2016 <- sqrt(varBtcVol2016)
-
-tabMoyLow2016<-0
-tabMoyHigh2016<-0
-tabMoyVol2016<-0
-tabVarLow2016<-0
-tabVarHigh2016<-0
-tabVarVol2016<-0
-tabEcartLow2016<-0
-tabEcartHigh2016<-0
-tabEcartVol2016<-0
-
-##boucle permettant de remplir les tableaux de mois
-for(i in 1:12){
-  ##moyenne pour chaque mois
-  tabMoyLow2016[i]<- mean(bitcoin_price_sorted_2016[bitcoin_price_sorted_2016$Month == i,]$Low)
-  tabMoyHigh2016[i]<- mean(bitcoin_price_sorted_2016[bitcoin_price_sorted_2016$Month == i,]$High)
-  tabMoyVol2016[i]<- mean(bitcoin_price_sorted_2016[bitcoin_price_sorted_2016$Month == i,]$Volume)
-  
-  ##variance pour chaque mois
-  tabVarLow2016[i]<- var(bitcoin_price_sorted_2016[bitcoin_price_sorted_2016$Month == i,]$Low)
-  tabVarHigh2016[i]<- var(bitcoin_price_sorted_2016[bitcoin_price_sorted_2016$Month == i,]$High)
-  tabVarVol2016[i]<- var(bitcoin_price_sorted_2016[bitcoin_price_sorted_2016$Month == i,]$Volume)
-
-  ##ecart type pour chaque mois
-  tabEcartLow2016[i] <- sqrt(tabVarLow2016[i])
-  tabEcartHigh2016[i] <- sqrt(tabVarHigh2016[i])
-  tabEcartVol2016[i] <- sqrt(tabVarVol2016[i])
-}
-
-library(knitr)
-
-moy2016Tab <- c("", "", "", "", "", "", "", "", "", "", "", moyBtcMax2016)
-
-df <- data.frame(Mois = c("Janvier", "Fevrier", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", 
-                          "Septembre", "Octobre", "Novembre", "Décembre"),
-                 Moyenne = tabMoyHigh2016,
-                 Variance = tabVarHigh2016,
-                 EcartType = tabEcartHigh2016,
-                 MoyenneAnnee = moy2016Tab)
-
-kable(df, caption = "Moyennes, Variances & Écart-types du cours minimum sur l'année 2016")
-```
-
-
-```{r average_var_2017, echo=FALSE, message=FALSE, warning=FALSE}
+```{r average_var_2017, echo=TRUE, message=FALSE, warning=FALSE}
 ##2017
 bitcoin_price_sorted_2017 <- bitcoin_price_sorted[bitcoin_price_sorted$Year == 2017,]
 
@@ -413,24 +349,10 @@ for(i in 1:12){
 }
 
 library(knitr)
-
-moy2017Tab <- c("", "", "", "", "", "", "", "", "", "", "", moyBtcMax2017)
-
-df <- data.frame(Mois = c("Janvier", "Fevrier", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", 
-                          "Septembre", "Octobre", "Novembre", "Décembre"),
-                 Moyenne = tabMoyHigh2017,
-                 Variance = tabVarHigh2017,
-                 EcartType = tabEcartHigh2017,
-                 MoyenneAnnee = moy2017Tab)
-
-kable(df, caption = "Moyennes, Variances & Écart-types du cours minimum sur l'année 2017")
+kable(tabMoyHigh2017, caption = "test")
 ```
 
 
-### Cours de toutes les cryptos
-Dans cette partie nous avons voulu prouver que les autres crypto-monnaies que le bitcoin suivait les varaitions de ce dernier. Les fichiers csv comprenant chacun une monnaie, nous ont beaucoup aidé pour la vérification de cette hypothèse. Pour prouver notre hypothese, nous avons fait le choix de présenter les courbes de 7 crypto-monnaies sur les années 2016, 2017 et début 2018 (ce choix a été fait par rapport au données que l'on disposait). Les 7 crypto-monnaies choisis sont : bitcoin, dash, ethereum, litecoin, monero, nem, ripple.
-
-Dans ce graphique nous remarquons que
 ```{r all_crypto, echo=FALSE, message=FALSE, warning=FALSE}
 getData2016 <-function(tab){
   tab$Year <- as.factor(tab$Year)
@@ -445,21 +367,6 @@ litecoin_price_sorted_all <- getData2016(litecoin_price_sorted)
 monero_price_sorted_all <- getData2016(monero_price_sorted)
 nem_price_sorted_all <- getData2016(nem_price_sorted)
 ripple_price_sorted_all <- getData2016(ripple_price_sorted)
-
-resultats <- data.frame(bitcoin= bitcoin_price_sorted_all$Close, dash=dash_price_sorted_all$Close, etherum=ethereum_price_sorted_all$Close,litecoin= litecoin_price_sorted_all$Close, monero=monero_price_sorted_all$Close, nem=nem_price_sorted_all$Close,ripple=ripple_price_sorted_all$Close, Moi=bitcoin_price_sorted_all$Month ,Jour=bitcoin_price_sorted_all$DateFormat)
-
-prediction2 <- gather(
-  data = resultats,
-  key = TYPE,
-  value = VAL,
-  bitcoin, dash, etherum, litecoin, monero, nem, ripple
-)
-
-ggplot(
-  prediction2,
-  aes(x = as.Date(Jour), y = VAL, color = TYPE),
-)+scale_x_date(name="Years", labels = date_format("%Y"), breaks = "1 year")+
-geom_line()
 ```
 
 
@@ -511,6 +418,28 @@ pourcentage_affichage <- round(pourcentages,2)
 text_pie(pourcentages,c(pourcentage_affichage[1],pourcentage_affichage[2],pourcentage_affichage[3],pourcentage_affichage[4], "", "" ,pourcentage_affichage[6]),cex=1.1) # Ces valeurs en % sont à remplacer manuellement
 
 legend(x="bottomright", legend=c("bitcoin","dash","ethereum","litecoin","monero","nem","ripple"), cex=1.2,fill=c("#FF0101","#4401FF","#01BBFF","#01FF4D","#F7FF01","#EE01FF","#FF9101"))
+```
+
+### Cours de toutes les cryptos
+Dans cette partie nous avons voulu prouver que les autres crypto-monnaies que le bitcoin suivait les varaitions de ce dernier. Les fichiers csv comprenant chacun une monnaie, nous ont beaucoup aidé pour la vérification de cette hypothèse. Pour prouver notre hypothese, nous avons fait le choix de présenter les courbes de 7 crypto-monnaies sur les années 2016, 2017 et début 2018 (ce choix a été fait par rapport au données que l'on disposait). Les 7 crypto-monnaies choisis sont : bitcoin, dash, ethereum, litecoin, monero, nem, ripple.
+
+Dans ce graphique nous remarquons que les crypto-monnaies suivent environ les mêmes variations que le bitcoin avec moins d'amplitude. En effet à partir de mi-2017 jusqu'à début 2018 les mêmes baisses et mêmes hausses sont à observer dans toutes ces crypto-monnaies.
+
+```{r}
+resultats <- data.frame(bitcoin= bitcoin_price_sorted_all$Close, dash=dash_price_sorted_all$Close, etherum=ethereum_price_sorted_all$Close,litecoin= litecoin_price_sorted_all$Close, monero=monero_price_sorted_all$Close, nem=nem_price_sorted_all$Close,ripple=ripple_price_sorted_all$Close, Moi=bitcoin_price_sorted_all$Month ,Jour=bitcoin_price_sorted_all$DateFormat)
+
+prediction2 <- gather(
+  data = resultats,
+  key = TYPE,
+  value = VAL,
+  bitcoin, dash, etherum, litecoin, monero, nem, ripple
+)
+
+ggplot(
+  prediction2,
+  aes(x = as.Date(Jour), y = VAL, color = TYPE),
+)+scale_x_date(name="Years", labels = date_format("%Y"), breaks = "1 year")+
+geom_line()
 ```
 
 
