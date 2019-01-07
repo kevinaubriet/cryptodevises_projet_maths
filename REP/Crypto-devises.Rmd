@@ -69,7 +69,7 @@ Tout ce projet se trouve sur un [git]("https://github.com/kevinaubriet/cryptodev
 
 Une fois que l'environnement a été mis en place, nous avons effectué tous les traitements de données/tableaux pour en tirer uniquement les choses utiles.
 
-La première chose que nous avons fait est de poser l'hypothèse ue la baisse ou la hausse du cours du Bitcoin était favorisée durant différentes périodes sur ces 3 dernières années. C'est alors que nous avons réalisé deux graphiques sur l'évolution du cours Bitcoin de 2015 à 2018 : l'un croisant les courbes des différentes années suivant les mois, et l'autre où les données sont présentes sur une mêmes courbe suivant les mois également.
+La première chose que nous avons fait est de poser l'hypothèse que la baisse ou la hausse du cours du Bitcoin était favorisée durant différentes périodes sur ces 3 dernières années. C'est alors que nous avons réalisé deux graphiques sur l'évolution du cours Bitcoin de 2015 à 2018 : l'un croisant les courbes des différentes années suivant les mois, et l'autre où les données sont présentes sur une mêmes courbe suivant les mois également.
 
 Par la suite, nous avons voulu approfondir la vérification de l'hyothèse en réalisant un graphique des variations du cours du Bitcoin en pourcentage (%) d'un jour sur l'autre pendant l'année 2016 et 2017.
 
